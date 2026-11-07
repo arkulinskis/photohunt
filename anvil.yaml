@@ -553,14 +553,26 @@ db_schema:
     server: full
     title: Users
 metadata:
-  description: 'PhotoHunt: birthday-party photo scavenger hunts. Grown-ups snap things around the house, kids scan a QR code
-    and race to find and photograph them.'
-  logo_img: asset:icon-512.png
-  title: PhotoHunt
+  description: "Make a photo scavenger hunt in five minutes: snap things at home, kids scan a QR code and race to find and photograph them."
+  logo_img: "asset:icon-512.png"
+  title: "PhotoHunt: a photo treasure hunt for kids' birthday parties"
 name: PhotoHunt
 native_deps:
   head_html: |
     <script src="_/theme/legal-kit.js?v=33b811ded4"></script>
+    <!-- seo:start (APP_MAKER/seo: edit seo/apps/photohunt.json and run seo.py, not here) -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="keywords" content="photo scavenger hunt for kids, birthday party treasure hunt, indoor scavenger hunt app, kids party games at home, picture scavenger hunt, qr code treasure hunt, party tasks for kids, voice clue treasure hunt, rainy day games for kids, free scavenger hunt maker">
+    <meta name="author" content="Arkvital">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="PhotoHunt">
+    <meta property="og:title" content="PhotoHunt: a photo treasure hunt for kids&#x27; birthday parties">
+    <meta property="og:description" content="Make a photo scavenger hunt in five minutes: snap things at home, kids scan a QR code and race to find and photograph them.">
+    <meta property="og:locale" content="en_CA">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="PhotoHunt: a photo treasure hunt for kids&#x27; birthday parties">
+    <meta name="twitter:description" content="Make a photo scavenger hunt in five minutes: snap things at home, kids scan a QR code and race to find and photograph them.">
+    <!-- seo:end -->
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#FFF4F6">
     <meta name="apple-mobile-web-app-capable" content="yes">
