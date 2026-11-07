@@ -1,0 +1,17 @@
+---
+custom_component: true
+properties:
+  - name: text
+    type: string
+    default_value: ""
+    description: What the QR code holds (a join link)
+    default_binding_prop: true
+  - name: label
+    type: string
+    default_value: QR code
+    description: What a screen reader says
+toolbox_item:
+  title: QR code
+  group: PhotoHunt
+---
+<div class="cmp-host"><div class="ph-qr" anvil:dom-node="art"></div></div>

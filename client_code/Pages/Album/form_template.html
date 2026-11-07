@@ -1,0 +1,33 @@
+<anvil-form layout="PhotoHunt.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap al">
+      <div anvil:name="gone" class="ui-empty"><i class="ic ic-image"></i><h2>This album isn't here</h2><p>The hunt may have been deleted.</p><a class="ui-btn primary" href="#home">Back to Party HQ</a></div>
+      <div anvil:name="main" class="al-screen">
+        <a class="hk-back" anvil:name="back_link" href="#home"><i class="ic ic-back"></i>Hunt kitchen</a>
+        <div class="ui-page-head">
+          <div>
+            <anvil-component type="Label" name="title" prop:role='["page-title"]'></anvil-component>
+            <anvil-component type="Label" name="sub" prop:role='["page-sub"]'></anvil-component>
+          </div>
+          <div class="ui-row">
+            <anvil-component type="Button" name="print_button" prop:text="Print certificates" prop:role='["btn", "btn-primary", "ic-printer"]'></anvil-component>
+            <anvil-component type="Button" name="make_button" prop:text="Make one like this" prop:role='["btn", "ic-copy"]'></anvil-component>
+            <anvil-component type="Button" name="wipe_button" prop:text="Delete kids' photos" prop:role='["btn", "btn-ghost", "ic-trash"]'></anvil-component>
+          </div>
+        </div>
+        <section class="al-results">
+          <h2>Who lit the most candles</h2>
+          <anvil-component type="RepeatingPanel" name="results_panel" prop:item_template="PhotoHunt.Items.ResultRow" prop:role='["result-list"]'></anvil-component>
+          <p class="muted" anvil:name="no_players">Nobody played this hunt yet.</p>
+        </section>
+        <section class="al-treasures">
+          <h2>Every find</h2>
+          <anvil-component type="RepeatingPanel" name="treasures_panel" prop:item_template="PhotoHunt.Items.AlbumTreasure" prop:role='["album-list"]'></anvil-component>
+        </section>
+      </div>
+      <div class="al-certs" aria-hidden="true">
+        <anvil-component type="RepeatingPanel" name="certs_panel" prop:item_template="PhotoHunt.Items.Certificate" prop:role='["cert-list"]'></anvil-component>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

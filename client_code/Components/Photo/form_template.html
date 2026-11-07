@@ -1,0 +1,28 @@
+---
+custom_component: true
+properties:
+  - name: photo_key
+    type: string
+    default_value: ""
+    description: The stored photo's key (served at /_/api/photo/<key>)
+    default_binding_prop: true
+  - name: art
+    type: string
+    default_value: ""
+    description: A drawing to show when there is no photo (the demo hunts' objects)
+  - name: src
+    type: string
+    default_value: ""
+    description: A direct address (a fresh snapshot's blob URL); wins over the others
+  - name: alt
+    type: string
+    default_value: ""
+  - name: mystery
+    type: boolean
+    default_value: false
+    description: Hide the picture behind a question mark (voice hunts until found)
+toolbox_item:
+  title: Photo
+  group: PhotoHunt
+---
+<div class="cmp-host"><div class="ph-photo" anvil:dom-node="box"><img alt="" anvil:dom-node="img" decoding="async"><span class="ph-photo-empty" anvil:dom-node="empty"><i class="ic ic-camera"></i><span>No picture yet</span></span><span class="ph-photo-q" anvil:dom-node="q" aria-hidden="true">?</span></div></div>

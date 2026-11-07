@@ -1,0 +1,40 @@
+<anvil-form layout="PhotoHunt.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap hq">
+      <div class="ui-page-head">
+        <div>
+          <anvil-component type="Label" name="hello" prop:role='["page-title"]' prop:text="Party HQ"></anvil-component>
+          <anvil-component type="Label" name="sub" prop:role='["page-sub"]'></anvil-component>
+        </div>
+        <div class="ui-row">
+          <a class="ui-btn" href="#join"><i class="ic ic-scan"></i>Join as a kid</a>
+          <anvil-component type="Button" name="new_button" prop:text="Bake a new hunt" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component>
+        </div>
+      </div>
+      <anvil-component type="RepeatingPanel" name="hunts_panel" prop:item_template="PhotoHunt.Items.HuntCard" prop:role='["hunt-grid"]'></anvil-component>
+      <div class="hq-empty" anvil:name="empty">
+        <div class="hq-empty-art"><anvil-component type="PhotoHunt.Components.Cake" name="empty_cake" prop:flavour="strawberry" prop:total="5" prop:lit="2"></anvil-component></div>
+        <div>
+          <h2>Your first hunt takes five minutes</h2>
+          <ol class="hq-steps">
+            <li><b>Bake a hunt.</b> Name it, pick a flavour and how kids win.</li>
+            <li><b>Snap 5 to 10 things</b> around the house, or pick party tasks.</li>
+            <li><b>Show the QR code.</b> Kids scan it on a tablet and the hunt is on.</li>
+          </ol>
+          <anvil-component type="Button" name="empty_button" prop:text="Bake your first hunt" prop:role='["btn", "btn-primary", "btn-lg", "ic-cake"]'></anvil-component>
+        </div>
+      </div>
+
+      <section class="hq-sec">
+        <div class="ui-row between hq-sec-head"><h2>Your kids</h2><a class="ui-btn sm" href="#family"><i class="ic ic-users"></i>Manage kids</a></div>
+        <anvil-component type="RepeatingPanel" name="kids_panel" prop:item_template="PhotoHunt.Items.KidCard" prop:role='["kid-strip"]'></anvil-component>
+        <p class="muted" anvil:name="no_kids">Add your kids to give each one a Kids' corner on the tablet: they join hunts with one tap and collect stickers. <a href="#family">Add a kid</a></p>
+      </section>
+
+      <section class="hq-sec" anvil:name="examples_box">
+        <div class="hq-sec-head"><h2>Example hunts</h2><p class="muted">Open one to see how it works, then copy it to make it yours. Or play the Try-me Hunt yourself with code <b>CAKE42</b>.</p></div>
+        <anvil-component type="RepeatingPanel" name="examples_panel" prop:item_template="PhotoHunt.Items.HuntCard" prop:role='["hunt-grid"]'></anvil-component>
+      </section>
+    </div>
+  </anvil-block>
+</anvil-form>

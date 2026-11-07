@@ -1,0 +1,24 @@
+<anvil-form layout="PhotoHunt.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap tasks">
+      <div class="ui-page-head">
+        <div>
+          <anvil-component type="Label" name="title" prop:role='["page-title"]' prop:text="100 party tasks for kids"></anvil-component>
+          <p class="page-sub-p">Indoor-safe, giggly and quick. Press Hear it and the device reads a task aloud. Drop any of them into a hunt, then record them in your own voice if you like.</p>
+        </div>
+      </div>
+      <div class="tasks-tools">
+        <label class="ui-field"><span class="ui-sr">Search tasks</span><anvil-component type="TextBox" name="search_box" prop:placeholder="Search: jump, draw, find..." prop:type="search"></anvil-component></label>
+        <div role="group" aria-label="Categories"><anvil-component type="RepeatingPanel" name="cats_panel" prop:item_template="PhotoHunt.Items.CatChip" prop:role='["chip-row"]'></anvil-component></div>
+      </div>
+      <div class="tasks-add" anvil:name="add_bar">
+        <anvil-component type="Label" name="picked" prop:role='["strong"]'></anvil-component>
+        <label class="ui-field"><span class="ui-sr">Hunt to add them to</span><anvil-component type="DropDown" name="hunt_drop"></anvil-component></label>
+        <anvil-component type="Button" name="add_button" prop:text="Add to hunt" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component>
+      </div>
+      <div class="tasks-guest" anvil:name="guest_bar"><p><a href="#auth/signup">Make a free account</a> to drop these tasks into your own hunt.</p></div>
+      <anvil-component type="RepeatingPanel" name="tasks_panel" prop:item_template="PhotoHunt.Items.TaskRow" prop:role='["task-list"]'></anvil-component>
+      <anvil-component type="Label" name="empty" prop:role='["fine-print"]' prop:text="No task matches that. Try another word." prop:visible="false"></anvil-component>
+    </div>
+  </anvil-block>
+</anvil-form>

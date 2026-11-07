@@ -1,0 +1,41 @@
+<anvil-form layout="PhotoHunt.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="kid" anvil:name="root">
+      <div anvil:name="gone_box" class="play-gone">
+        <anvil-component type="PhotoHunt.Components.Cake" name="gone_cake" prop:flavour="vanilla" prop:total="3" prop:blown="true"></anvil-component>
+        <h1>This Kids' corner moved</h1>
+        <anvil-component type="Label" name="gone_text"></anvil-component>
+        <a class="ui-btn primary lg" href="#join"><i class="ic ic-scan"></i>Join a hunt</a>
+      </div>
+      <div anvil:name="main_box" class="kid-main">
+        <header class="play-top">
+          <anvil-component type="PhotoHunt.Components.Topper" name="topper" prop:size="64"></anvil-component>
+          <anvil-component type="Label" name="hello" prop:role='["kid-hello"]'></anvil-component>
+          <span class="play-spacer"></span>
+          <a class="play-exit" href="#landing">Grown-ups</a>
+        </header>
+        <section class="kid-join ui-card">
+          <h2>Join a new hunt</h2>
+          <div class="jn-code">
+            <label class="ui-field"><span class="ui-sr">Hunt code</span>
+              <anvil-component type="TextBox" name="code_box" prop:placeholder="CAKE42" prop:role='["jn-code-box"]'></anvil-component></label>
+            <anvil-component type="Button" name="go_button" prop:text="Go" prop:role='["btn", "btn-primary", "btn-lg", "ic-arrow"]'></anvil-component>
+          </div>
+          <anvil-component type="Button" name="scan_button" prop:text="Scan the QR code" prop:role='["btn", "btn-lg", "btn-block", "ic-scan"]'></anvil-component>
+          <div anvil:name="scan_box"><anvil-component type="PhotoHunt.Components.Scanner" name="scanner"></anvil-component></div>
+          <anvil-component type="Label" name="error" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+        </section>
+        <section class="kid-sec">
+          <h2>My hunts</h2>
+          <anvil-component type="RepeatingPanel" name="hunts_panel" prop:item_template="PhotoHunt.Items.KidHunt" prop:role='["kid-hunts"]'></anvil-component>
+          <p class="muted" anvil:name="no_hunts">No hunts yet. Ask a grown-up for a code!</p>
+        </section>
+        <section class="kid-sec">
+          <h2>My sticker book</h2>
+          <anvil-component type="RepeatingPanel" name="stickers_panel" prop:item_template="PhotoHunt.Items.StickerItem" prop:role='["sticker-row"]'></anvil-component>
+          <p class="muted" anvil:name="no_stickers">Play a hunt to win your first sticker.</p>
+        </section>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

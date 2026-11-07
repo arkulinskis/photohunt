@@ -1,0 +1,23 @@
+---
+custom_component: true
+properties:
+  - name: voice_key
+    type: string
+    default_value: ""
+    description: A recorded clip's key; without one the text is read aloud by the device
+    default_binding_prop: true
+  - name: text
+    type: string
+    default_value: ""
+  - name: label
+    type: string
+    default_value: Hear the clue
+  - name: big
+    type: boolean
+    default_value: false
+    description: The large round kid-size button
+toolbox_item:
+  title: Voice button
+  group: PhotoHunt
+---
+<div class="cmp-host"><button type="button" class="ph-voice" anvil:dom-node="btn" anvil:on-dom:click="self.btn_click"><span class="ph-voice-ic" aria-hidden="true"><i class="ic ic-volume"></i></span><span class="ph-voice-label" anvil:dom-node="lab">Hear the clue</span></button></div>

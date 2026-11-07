@@ -1,0 +1,13 @@
+<div class="hc-host">
+<a class="hc" anvil:name="link" href="#home">
+  <span class="hc-art"><anvil-component type="PhotoHunt.Components.Cake" name="cake" prop:total="0" prop:lit="0"></anvil-component></span>
+  <span class="hc-body">
+    <anvil-component type="Label" name="title" prop:role='["hc-title"]' bind:text="self.item['title']"></anvil-component>
+    <anvil-component type="Label" name="meta" prop:role='["hc-meta"]'></anvil-component>
+    <span class="hc-chips">
+      <anvil-component type="Label" name="status" prop:role='["badge"]'></anvil-component>
+      <anvil-component type="Label" name="code" prop:role='["badge", "ph-code-chip"]'></anvil-component>
+    </span>
+  </span>
+</a>
+</div>

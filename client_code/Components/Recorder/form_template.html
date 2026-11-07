@@ -1,0 +1,35 @@
+---
+custom_component: true
+properties:
+  - name: voice_key
+    type: string
+    default_value: ""
+    description: The clip already saved (so it can be played or replaced)
+    default_binding_prop: true
+  - name: max_seconds
+    type: number
+    default_value: 45
+  - name: prompt
+    type: string
+    default_value: Record a clue
+events:
+  - name: recorded
+    description: A new recording is ready (not saved yet)
+    parameters:
+      - name: media
+      - name: seconds
+  - name: removed
+    description: The person removed the recording
+toolbox_item:
+  title: Voice recorder
+  group: PhotoHunt
+---
+<div class="cmp-host"><div class="ph-rec" anvil:dom-node="box">
+  <anvil-component type="Button" name="rec_button" prop:text="Record a clue" prop:role='["btn", "ic-mic", "ph-rec-btn"]'></anvil-component>
+  <anvil-component type="Button" name="stop_button" prop:text="Stop" prop:role='["btn", "btn-danger", "btn-solid", "ic-stop", "ph-rec-btn"]' prop:visible="false"></anvil-component>
+  <span class="ph-rec-meter" anvil:dom-node="meter" aria-hidden="true"><span anvil:dom-node="bar"></span></span>
+  <anvil-component type="Label" name="time_label" prop:role='["ph-rec-time"]'></anvil-component>
+  <anvil-component type="Button" name="play_button" prop:text="Play" prop:role='["btn", "btn-sm", "ic-play"]' prop:visible="false"></anvil-component>
+  <anvil-component type="Button" name="remove_button" prop:text="Remove" prop:role='["btn", "btn-sm", "btn-ghost", "ic-trash"]' prop:visible="false"></anvil-component>
+  <anvil-component type="Label" name="message" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+</div></div>

@@ -1,0 +1,23 @@
+---
+custom_component: true
+properties:
+  - name: topper
+    type: string
+    default_value: star
+    description: star, heart, crown, rocket, flower, balloon, dino, moon, bolt, fish, cat or rainbow
+    default_binding_prop: true
+  - name: colour
+    type: string
+    default_value: pink
+    description: pink, mint, blue, lemon, orange or berry
+  - name: size
+    type: number
+    default_value: 44
+    description: Width and height in pixels
+toolbox_item:
+  title: Topper
+  group: PhotoHunt
+help_text: |
+  A kid's cake-topper avatar (round badge with a shape). Drawn by PH.topper in theme/assets/ph-art.js.
+---
+<div class="cmp-host"><span class="ph-topper" anvil:dom-node="art"></span></div>

@@ -1,0 +1,31 @@
+---
+custom_component: true
+properties:
+  - name: flavour
+    type: string
+    default_value: strawberry
+    description: strawberry, chocolate, vanilla, mint, blueberry or lemon
+  - name: total
+    type: number
+    default_value: 6
+    description: How many candles (one per treasure)
+  - name: lit
+    type: number
+    default_value: 0
+    description: How many are lit (treasures found)
+    default_binding_prop: true
+  - name: blown
+    type: boolean
+    default_value: false
+    description: Candles blown out (smoke instead of flames)
+  - name: label
+    type: string
+    default_value: ""
+    description: What a screen reader says (default "Birthday cake with N of M candles lit")
+toolbox_item:
+  title: Cake
+  group: PhotoHunt
+help_text: |
+  The birthday cake: one candle per treasure, lit when it is found. Drawn by PH.cake in theme/assets/ph-art.js.
+---
+<div class="cmp-host"><div class="ph-cake" anvil:dom-node="art"></div></div>

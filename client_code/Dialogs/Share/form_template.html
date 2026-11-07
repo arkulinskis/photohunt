@@ -1,0 +1,17 @@
+<div class="ui sh">
+  <div class="ph-print sh-card">
+    <h2 class="dlg-h sh-title" anvil:dom-node="title">Scan to join!</h2>
+    <div class="sh-qr"><anvil-component type="PhotoHunt.Components.QrCode" name="qr" prop:label="QR code to join the hunt"></anvil-component></div>
+    <p class="sh-or">or open <b anvil:dom-node="site"></b>, press Join a hunt and type</p>
+    <anvil-component type="Label" name="code" prop:role='["sh-code"]'></anvil-component>
+  </div>
+  <div class="sh-tools">
+    <p class="muted">Kids scan the code with the tablet's camera (or with Scan in the app). Each kid, or each team sharing a tablet, picks a name and a cake topper.</p>
+    <label class="ui-field"><span>Link</span><anvil-component type="TextBox" name="link_box"></anvil-component></label>
+    <div class="ui-row">
+      <anvil-component type="Button" name="copy_button" prop:text="Copy link" prop:role='["btn", "ic-copy"]'></anvil-component>
+      <anvil-component type="Button" name="print_button" prop:text="Print a party card" prop:role='["btn", "ic-printer"]'></anvil-component>
+      <anvil-component type="Button" name="close_button" prop:text="Done" prop:role='["btn", "btn-primary"]'></anvil-component>
+    </div>
+  </div>
+</div>

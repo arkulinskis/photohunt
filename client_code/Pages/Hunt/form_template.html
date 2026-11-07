@@ -1,0 +1,66 @@
+<anvil-form layout="PhotoHunt.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap hk">
+      <div anvil:name="gone" class="ui-empty"><i class="ic ic-cake"></i><h2>This hunt isn't here</h2><p>It may have been deleted, or it belongs to someone else.</p><a class="ui-btn primary" href="#home">Back to Party HQ</a></div>
+      <div anvil:name="main">
+        <a class="hk-back" href="#home"><i class="ic ic-back"></i>Party HQ</a>
+        <div class="hk-head">
+          <div class="hk-cake"><anvil-component type="PhotoHunt.Components.Cake" name="cake"></anvil-component></div>
+          <div class="hk-title">
+            <anvil-component type="Label" name="title" prop:role='["page-title"]'></anvil-component>
+            <anvil-component type="Label" name="meta" prop:role='["page-sub"]'></anvil-component>
+            <div class="hk-chips">
+              <anvil-component type="Label" name="status" prop:role='["badge"]'></anvil-component>
+              <anvil-component type="Label" name="code" prop:role='["badge", "ph-code-chip"]'></anvil-component>
+            </div>
+          </div>
+          <div class="hk-actions" anvil:name="actions">
+            <anvil-component type="Button" name="share_button" prop:text="Share" prop:role='["btn", "btn-primary", "ic-qr"]'></anvil-component>
+            <a class="ui-btn" anvil:name="live_link" href="#home"><i class="ic ic-flag"></i>Live board</a>
+            <a class="ui-btn" anvil:name="album_link" href="#home"><i class="ic ic-image"></i>Album</a>
+            <anvil-component type="Button" name="settings_button" prop:text="Settings" prop:role='["btn", "ic-sliders"]'></anvil-component>
+            <anvil-component type="Button" name="copy_button" prop:text="Copy" prop:role='["btn", "btn-icon", "ic-copy"]' prop:tooltip="Copy this hunt for another party"></anvil-component>
+            <anvil-component type="Button" name="delete_button" prop:text="Delete hunt" prop:role='["btn", "btn-icon", "btn-ghost", "ic-trash"]'></anvil-component>
+          </div>
+        </div>
+        <div class="hk-example" anvil:name="example_box">
+          <p><b>This is an example hunt.</b> Look around, play it, then make your own copy to change it for your party.</p>
+          <div class="ui-row">
+            <anvil-component type="Button" name="make_button" prop:text="Make one like this" prop:role='["btn", "btn-primary", "ic-copy"]'></anvil-component>
+            <a class="ui-btn" anvil:name="example_album" href="#home"><i class="ic ic-image"></i>See its album</a>
+            <a class="ui-btn" anvil:name="example_play" href="#join"><i class="ic ic-play"></i>Play it</a>
+          </div>
+        </div>
+
+        <section class="hk-welcome ui-card" anvil:name="welcome_box">
+          <div>
+            <h2>Welcome message</h2>
+            <p class="muted">Kids hear it when the hunt starts. Try: "Happy birthday, Mia! Find all the treasures to light your candles!"</p>
+          </div>
+          <anvil-component type="PhotoHunt.Components.Recorder" name="intro_rec" prop:prompt="Record a welcome" prop:max_seconds="30"></anvil-component>
+        </section>
+
+        <section class="hk-list">
+          <div class="hk-list-head">
+            <anvil-component type="Label" name="count" prop:role='["sec-title"]'></anvil-component>
+            <div class="ui-row" anvil:name="add_row">
+              <anvil-component type="Button" name="add_find_button" prop:text="Snap a treasure" prop:role='["btn", "btn-primary", "ic-camera"]'></anvil-component>
+              <anvil-component type="Button" name="add_lib_button" prop:text="Add from 100 tasks" prop:role='["btn", "ic-list"]'></anvil-component>
+              <anvil-component type="Button" name="add_task_button" prop:text="Write a task" prop:role='["btn", "ic-edit"]'></anvil-component>
+            </div>
+          </div>
+          <anvil-component type="RepeatingPanel" name="treasures_panel" prop:item_template="PhotoHunt.Items.TreasureRow" prop:role='["treasure-list"]'></anvil-component>
+          <div class="ui-empty" anvil:name="empty"><i class="ic ic-camera"></i><h3>No treasures yet</h3><anvil-component type="Label" name="empty_text"></anvil-component></div>
+        </section>
+
+        <section class="hk-ready" anvil:name="ready_box">
+          <div><h2>Ready to play?</h2><p class="muted">Show the kids the QR code, then open the live board to start the clock and watch the candles light up.</p></div>
+          <div class="ui-row">
+            <anvil-component type="Button" name="share2_button" prop:text="Show the QR code" prop:role='["btn", "btn-primary", "ic-qr"]'></anvil-component>
+            <a class="ui-btn" anvil:name="live2_link" href="#home"><i class="ic ic-flag"></i>Open the live board</a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

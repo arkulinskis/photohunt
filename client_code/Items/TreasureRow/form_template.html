@@ -1,0 +1,21 @@
+<div class="tr">
+  <span class="tr-num" anvil:dom-node="num"></span>
+  <div class="tr-pic" anvil:name="pic_box"><anvil-component type="PhotoHunt.Components.Photo" name="photo"></anvil-component></div>
+  <div class="tr-task" anvil:name="task_box" aria-hidden="true"><i class="ic ic-star"></i></div>
+  <div class="tr-body">
+    <anvil-component type="Label" name="name" prop:role='["tr-name"]'></anvil-component>
+    <anvil-component type="Label" name="clue" prop:role='["tr-clue"]'></anvil-component>
+    <div class="tr-chips">
+      <anvil-component type="Label" name="voice_chip" prop:role='["badge", "badge-brand", "ic-volume"]'></anvil-component>
+      <anvil-component type="Label" name="timer_chip" prop:role='["badge", "ic-timer"]'></anvil-component>
+      <anvil-component type="Label" name="proof_chip" prop:role='["badge"]'></anvil-component>
+      <anvil-component type="Label" name="match_chip" prop:role='["badge", "badge-good", "ic-check"]' prop:text="Magic match ready"></anvil-component>
+    </div>
+  </div>
+  <div class="tr-actions" anvil:name="actions">
+    <anvil-component type="Button" name="up_button" prop:text="Move up" prop:role='["btn", "btn-sm", "btn-icon", "btn-ghost", "ic-up"]'></anvil-component>
+    <anvil-component type="Button" name="down_button" prop:text="Move down" prop:role='["btn", "btn-sm", "btn-icon", "btn-ghost", "ic-down"]'></anvil-component>
+    <anvil-component type="Button" name="edit_button" prop:text="Edit" prop:role='["btn", "btn-sm", "ic-edit"]'></anvil-component>
+    <anvil-component type="Button" name="delete_button" prop:text="Delete" prop:role='["btn", "btn-sm", "btn-icon", "btn-ghost", "ic-trash"]'></anvil-component>
+  </div>
+</div>

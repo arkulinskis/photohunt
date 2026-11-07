@@ -1,0 +1,56 @@
+<anvil-form layout="PhotoHunt.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap lv">
+      <div anvil:name="gone" class="ui-empty"><i class="ic ic-flag"></i><h2>This hunt isn't here</h2><p>It may have been deleted.</p><a class="ui-btn primary" href="#home">Back to Party HQ</a></div>
+      <div anvil:name="main">
+        <a class="hk-back" anvil:name="back_link" href="#home"><i class="ic ic-back"></i>Hunt kitchen</a>
+        <div class="lv-head">
+          <div>
+            <anvil-component type="Label" name="title" prop:role='["page-title"]'></anvil-component>
+            <div class="hk-chips"><anvil-component type="Label" name="status" prop:role='["badge"]'></anvil-component><anvil-component type="Label" name="players_count" prop:role='["badge"]'></anvil-component></div>
+          </div>
+          <div class="lv-clock" role="timer" aria-live="off">
+            <anvil-component type="Label" name="clock" prop:role='["lv-clock-n"]'></anvil-component>
+            <anvil-component type="Label" name="clock_sub" prop:role='["fine-print"]'></anvil-component>
+          </div>
+        </div>
+        <div class="lv-controls">
+          <anvil-component type="Button" name="start_button" prop:text="Start the hunt" prop:role='["btn", "btn-primary", "btn-lg", "ic-play"]'></anvil-component>
+          <anvil-component type="Button" name="extend_button" prop:text="5 more minutes" prop:role='["btn", "ic-plus"]'></anvil-component>
+          <anvil-component type="Button" name="end_button" prop:text="End the hunt" prop:role='["btn", "ic-stop"]'></anvil-component>
+          <anvil-component type="Button" name="reset_button" prop:text="Play again" prop:role='["btn", "btn-primary", "ic-refresh"]'></anvil-component>
+          <a class="ui-btn" anvil:name="album_link" href="#home"><i class="ic ic-image"></i>Party album</a>
+        </div>
+        <anvil-component type="Label" name="hint" prop:role='["msg-note"]'></anvil-component>
+        <div class="lv-grid">
+          <div class="lv-main">
+            <section class="ui-card lv-sec" anvil:name="review_box">
+              <h2>Photos to check <anvil-component type="Label" name="review_count" prop:role='["badge", "badge-brand"]'></anvil-component></h2>
+              <anvil-component type="RepeatingPanel" name="review_panel" prop:item_template="PhotoHunt.Items.ReviewCard" prop:role='["review-grid"]'></anvil-component>
+              <p class="muted" anvil:name="no_review">Nothing to check. When a photo is close (or you check every photo), it shows up here.</p>
+            </section>
+            <section class="ui-card lv-sec">
+              <h2>Players</h2>
+              <div class="lv-team" anvil:name="team_box"><anvil-component type="PhotoHunt.Components.Cake" name="team_cake"></anvil-component><anvil-component type="Label" name="team_text" prop:role='["strong"]'></anvil-component></div>
+              <anvil-component type="RepeatingPanel" name="players_panel" prop:item_template="PhotoHunt.Items.PlayerRow" prop:role='["player-list"]'></anvil-component>
+              <p class="muted" anvil:name="no_players">No one has joined yet. Show the kids the QR code.</p>
+            </section>
+          </div>
+          <aside class="lv-side">
+            <section class="ui-card lv-sec lv-join">
+              <h2>Join the hunt</h2>
+              <div class="sh-qr"><anvil-component type="PhotoHunt.Components.QrCode" name="qr" prop:label="QR code to join the hunt"></anvil-component></div>
+              <anvil-component type="Label" name="code" prop:role='["sh-code"]'></anvil-component>
+              <p class="fine muted">Scan with the tablet camera, or type the code in Join a hunt.</p>
+            </section>
+            <section class="ui-card lv-sec">
+              <h2>What's happening</h2>
+              <anvil-component type="RepeatingPanel" name="feed_panel" prop:item_template="PhotoHunt.Items.FeedRow" prop:role='["feed-list"]'></anvil-component>
+              <p class="muted" anvil:name="no_feed">Finds show up here as they happen.</p>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

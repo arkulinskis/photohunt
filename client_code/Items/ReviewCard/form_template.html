@@ -1,0 +1,11 @@
+<div class="rv">
+  <div class="rv-pics">
+    <figure><anvil-component type="PhotoHunt.Components.Photo" name="target"></anvil-component><figcaption>Your photo</figcaption></figure>
+    <figure><anvil-component type="PhotoHunt.Components.Photo" name="snap"></anvil-component><figcaption anvil:dom-node="who"></figcaption></figure>
+  </div>
+  <anvil-component type="Label" name="what" prop:role='["rv-what"]'></anvil-component>
+  <div class="ui-row">
+    <anvil-component type="Button" name="yes_button" prop:text="Yes, found it" prop:role='["btn", "btn-primary", "btn-sm", "ic-check"]'></anvil-component>
+    <anvil-component type="Button" name="no_button" prop:text="Try again" prop:role='["btn", "btn-sm", "ic-x"]'></anvil-component>
+  </div>
+</div>

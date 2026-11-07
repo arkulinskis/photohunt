@@ -1,0 +1,110 @@
+<anvil-form layout="PhotoHunt.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="page-landing">
+      <section class="lp-hero">
+        <div class="ui-wrap">
+          <div class="lp-copy">
+            <h1>A photo treasure hunt, <em>baked in five minutes</em></h1>
+            <p class="lp-lead">Snap a few things around the house. Kids scan a QR code on a tablet and race to find and photograph the same things. Every find lights a candle on the birthday cake.</p>
+            <div class="lp-cta" anvil:name="guest_cta">
+              <a class="ui-btn primary lg" href="#auth/signup">Make a hunt, it's free <i class="ic ic-arrow"></i></a>
+              <a class="ui-btn lg" href="#join/CAKE42"><i class="ic ic-play"></i>Try the demo hunt</a>
+            </div>
+            <div class="lp-cta" anvil:name="member_cta">
+              <a class="ui-btn primary lg" href="#home">Open Party HQ <i class="ic ic-arrow"></i></a>
+              <a class="ui-btn lg" href="#join/CAKE42"><i class="ic ic-play"></i>Try the demo hunt</a>
+            </div>
+            <div class="lp-proof">
+              <span><i class="ic ic-check"></i>Any phone or tablet</span>
+              <span><i class="ic ic-check"></i>Nothing to install</span>
+              <span><i class="ic ic-check"></i>Kids need no account</span>
+            </div>
+          </div>
+          <div class="lp-party" aria-hidden="true">
+            <div class="lp-cake"><anvil-component type="PhotoHunt.Components.Cake" name="hero_cake" prop:flavour="strawberry" prop:total="4" prop:lit="4" prop:label="Birthday cake"></anvil-component></div>
+            <figure class="lp-pola p1"><img src="_/theme/demo-teapot.svg" alt="" width="160" height="160"><figcaption>Teapot <b>Found!</b></figcaption></figure>
+            <figure class="lp-pola p2"><img src="_/theme/demo-duck.svg" alt="" width="160" height="160"><figcaption>Duck <b>Found!</b></figcaption></figure>
+            <figure class="lp-pola p3"><img src="_/theme/demo-ball.svg" alt="" width="160" height="160"><figcaption>Ball <b>Found!</b></figcaption></figure>
+            <figure class="lp-pola p4"><img src="_/theme/demo-sock.svg" alt="" width="160" height="160"><figcaption>Sock <b>Found!</b></figcaption></figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-saved" anvil:name="saved_box">
+        <div class="ui-wrap">
+          <h2>On this tablet</h2>
+          <anvil-component type="RepeatingPanel" name="saved_panel" prop:item_template="PhotoHunt.Items.SavedLink" prop:role='["saved-list", "saved-row"]'></anvil-component>
+        </div>
+      </section>
+
+      <section class="lp-section" id="how">
+        <div class="ui-wrap">
+          <div class="lp-head"><h2>How a hunt goes</h2><p>The grown-up part takes five minutes. The kid part takes the rest of the afternoon.</p></div>
+          <ol class="lp-steps">
+            <li class="lp-step"><h3>Snap the treasures</h3><p>Walk around the house and photograph 5 to 10 things: the teapot, a teddy, a stripy sock. Add a spoken clue if you like.</p></li>
+            <li class="lp-step"><h3>Show the QR code</h3><p>Kids scan it with the tablet camera, type their name and pick a cake topper. A team can share one tablet.</p></li>
+            <li class="lp-step"><h3>Hunt and snap</h3><p>They run off, find each thing and photograph it. Magic match compares the photos; close calls go to you.</p></li>
+            <li class="lp-step"><h3>Blow out the candles</h3><p>A full cake, or the clock runs out: kids blow on the tablet to put the candles out, then win their stickers.</p></li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="lp-section lp-kinds-sec">
+        <div class="ui-wrap">
+          <div class="lp-head"><h2>Three ways to play</h2></div>
+          <div class="lp-kinds">
+            <div class="lp-kind">
+              <img src="_/theme/demo-teddy.svg" alt="" width="200" height="200">
+              <div><h3>Photo hunt</h3><p>Kids see your photo of each treasure and hunt for the real thing. Best for 4 and up, and for party guests who don't know the house.</p></div>
+            </div>
+            <div class="lp-kind">
+              <img src="_/theme/demo-clock.svg" alt="" width="200" height="200">
+              <div><h3>Voice hunt</h3><p>Record a riddle in your own voice: "I have hands but no fingers." Kids listen, work it out and snap the answer. The photo stays secret until they find it.</p></div>
+            </div>
+            <div class="lp-kind">
+              <img src="_/theme/demo-ball.svg" alt="" width="200" height="200">
+              <div><h3>Task party</h3><p>Record tasks ("hop like a frog to the door!") or pick from <a href="#tasks">100 ready-made party tasks</a>. Some have a timer, some want a silly photo.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section">
+        <div class="ui-wrap">
+          <div class="lp-head"><h2>Everything a party needs</h2></div>
+          <div class="lp-feats">
+            <div class="lp-feature"><i class="ic ic-wand"></i><h3>Magic match</h3><p>The app compares each snap with your photo. Easy, just right or tricky, to suit the age.</p></div>
+            <div class="lp-feature"><i class="ic ic-users"></i><h3>Grown-up check</h3><p>Close calls ask you. Say yes from your phone, or on the kid's tablet after a quick grown-ups-only sum.</p></div>
+            <div class="lp-feature"><i class="ic ic-flag"></i><h3>Live board</h3><p>Start the clock, add five minutes, watch every kid's candles light up as they find things.</p></div>
+            <div class="lp-feature"><i class="ic ic-timer"></i><h3>Race or together</h3><p>Everyone fills their own cake, or the whole party fills one cake as a team. With or without a timer.</p></div>
+            <div class="lp-feature"><i class="ic ic-image"></i><h3>Party album</h3><p>Your photo next to every kid's snap of the same thing, plus printable certificates for each hunter.</p></div>
+            <div class="lp-feature"><i class="ic ic-star"></i><h3>Kids' corner and stickers</h3><p>Each of your kids gets their own corner on the tablet: join with one tap, keep a sticker book.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section">
+        <div class="ui-wrap">
+          <div class="lp-head"><h2>Questions</h2></div>
+          <div class="lp-faq">
+            <details><summary>Is it free?</summary><p>Yes. Making hunts, playing them, the album and the 100 tasks are all free.</p></details>
+            <details><summary>Do kids need an account?</summary><p>No. Only the grown-up who makes the hunt has an account. Kids scan the code and type a first name or a team name. Your own kids can have a Kids' corner on the tablet, still without an account.</p></details>
+            <details><summary>How does it know it's the same thing?</summary><p>The app makes a small colour-and-shape fingerprint of your photo and of the kid's snap and compares them. It's forgiving about light and angle. When it isn't sure, it asks a grown-up, so nobody is stuck.</p></details>
+            <details><summary>Who can see the photos?</summary><p>Only you, the grown-up who made the hunt, and each kid sees their own snaps. Delete all the kids' photos of a hunt with one button in the album. Tip for kids: snap the thing, not the people.</p></details>
+            <details><summary>What if the camera won't start?</summary><p>Every camera screen also has "Choose a photo", which works with the tablet's own camera app. On a hunt in "every photo counts" mode, any picture lights a candle.</p></details>
+            <details><summary>Can several kids share one tablet?</summary><p>Yes: join as a team ("Zoe &amp; Sam"). In a race each tablet is one team; in "together" mode all finds go on one cake.</p></details>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section">
+        <div class="ui-wrap">
+          <div class="lp-band">
+            <div><h2>The party's on Saturday?</h2><p>Bake your hunt tonight. It takes five minutes and a walk around the house.</p></div>
+            <a class="ui-btn lg" href="#auth/signup" anvil:name="band_link">Make a hunt</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </anvil-block>
+</anvil-form>

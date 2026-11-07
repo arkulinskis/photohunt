@@ -1,0 +1,9 @@
+<div class="rr">
+  <span class="rr-rank" anvil:dom-node="rank"></span>
+  <anvil-component type="PhotoHunt.Components.Topper" name="topper" prop:size="48"></anvil-component>
+  <div class="rr-body">
+    <anvil-component type="Label" name="name" prop:role='["rr-name"]' bind:text="self.item['name']"></anvil-component>
+    <anvil-component type="Label" name="meta" prop:role='["fine-print"]'></anvil-component>
+  </div>
+  <anvil-component type="RepeatingPanel" name="stickers_panel" prop:item_template="PhotoHunt.Items.StickerItem" prop:role='["rr-stickers"]'></anvil-component>
+</div>

@@ -1,0 +1,17 @@
+<div class="ui tp">
+  <h2 class="dlg-h">Add tasks from the library</h2>
+  <p class="muted">100 party tasks kids can do indoors. Tick the ones you like; the device reads them aloud, or record your own voice after adding them.</p>
+  <label class="ui-field tp-search"><span class="ui-sr">Search tasks</span>
+    <anvil-component type="TextBox" name="search_box" prop:placeholder="Search: jump, draw, find..." prop:type="search"></anvil-component></label>
+  <div class="tp-chips" role="group" aria-label="Categories"><anvil-component type="RepeatingPanel" name="cats_panel" prop:item_template="PhotoHunt.Items.CatChip" prop:role='["chip-row"]'></anvil-component></div>
+  <div class="tp-list"><anvil-component type="RepeatingPanel" name="tasks_panel" prop:item_template="PhotoHunt.Items.TaskRow" prop:role='["task-list"]'></anvil-component></div>
+  <anvil-component type="Label" name="empty" prop:role='["fine-print"]' prop:text="No task matches that. Try another word." prop:visible="false"></anvil-component>
+  <anvil-component type="Label" name="message" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+  <div class="ui-row between tp-foot">
+    <anvil-component type="Label" name="count" prop:role='["strong"]'></anvil-component>
+    <div class="ui-row">
+      <anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component>
+      <anvil-component type="Button" name="add_button" prop:text="Add tasks" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component>
+    </div>
+  </div>
+</div>

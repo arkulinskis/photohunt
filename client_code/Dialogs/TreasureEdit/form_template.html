@@ -1,0 +1,36 @@
+<div class="ui te">
+  <h2 class="dlg-h" anvil:dom-node="heading">New treasure</h2>
+  <div class="te-grid">
+    <div class="te-photo" anvil:name="photo_side">
+      <div anvil:name="photo_view">
+        <anvil-component type="PhotoHunt.Components.Photo" name="photo"></anvil-component>
+        <div class="ui-row te-photo-bar">
+          <anvil-component type="Button" name="snap_button" prop:text="Take a photo" prop:role='["btn", "btn-primary", "ic-camera"]'></anvil-component>
+          <anvil-component type="Button" name="unphoto_button" prop:text="Remove photo" prop:role='["btn", "btn-sm", "btn-ghost", "ic-trash"]'></anvil-component>
+        </div>
+      </div>
+      <div anvil:name="cam_view" class="te-cam">
+        <anvil-component type="PhotoHunt.Components.Camera" name="camera" prop:shutter_text="Snap it"></anvil-component>
+        <anvil-component type="Button" name="cam_cancel" prop:text="Cancel" prop:role='["btn", "btn-sm", "btn-ghost"]'></anvil-component>
+      </div>
+      <anvil-component type="Label" name="photo_hint" prop:role='["fine-print"]'></anvil-component>
+    </div>
+    <div class="ui-stack te-fields">
+      <label class="ui-field"><span anvil:dom-node="name_cap">What is it?</span>
+        <anvil-component type="TextBox" name="name_box" prop:placeholder="The red teapot"></anvil-component></label>
+      <label class="ui-field"><span anvil:dom-node="clue_cap">Clue <em>(optional, kids can hear it)</em></span>
+        <anvil-component type="TextArea" name="clue_box" prop:placeholder="It lives in the kitchen and loves tea parties." prop:height="80"></anvil-component></label>
+      <div class="ui-field"><span anvil:dom-node="voice_cap">Your voice <em>(optional)</em></span>
+        <anvil-component type="PhotoHunt.Components.Recorder" name="recorder" prop:prompt="Record the clue"></anvil-component></div>
+      <div class="hs-two" anvil:name="task_opts">
+        <label class="ui-field"><span>Timer</span><anvil-component type="DropDown" name="timer_drop"></anvil-component></label>
+        <label class="ui-field"><span>Kids show it by</span><anvil-component type="DropDown" name="proof_drop"></anvil-component></label>
+      </div>
+      <anvil-component type="Label" name="message" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+      <div class="ui-row end">
+        <anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component>
+        <anvil-component type="Button" name="save_button" prop:text="Save" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component>
+      </div>
+    </div>
+  </div>
+</div>

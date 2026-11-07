@@ -1,0 +1,47 @@
+<anvil-form layout="PhotoHunt.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap jn">
+      <div class="jn-card ui-card" anvil:name="ask_box">
+        <div class="jn-art"><anvil-component type="PhotoHunt.Components.Cake" name="ask_cake" prop:flavour="lemon" prop:total="6" prop:lit="3"></anvil-component></div>
+        <anvil-component type="Label" name="ask_title" prop:role='["page-title"]' prop:text="Join a hunt"></anvil-component>
+        <p class="jn-lead">Scan the hunt's QR code, or type the 6 letters a grown-up gives you.</p>
+        <div class="jn-code">
+          <label class="ui-field"><span class="ui-sr">Hunt code</span>
+            <anvil-component type="TextBox" name="code_box" prop:placeholder="CAKE42" prop:role='["jn-code-box"]'></anvil-component></label>
+          <anvil-component type="Button" name="go_button" prop:text="Find it" prop:role='["btn", "btn-primary", "btn-lg", "ic-arrow"]'></anvil-component>
+        </div>
+        <anvil-component type="Button" name="scan_button" prop:text="Scan the QR code" prop:role='["btn", "btn-lg", "btn-block", "ic-scan"]'></anvil-component>
+        <div anvil:name="scan_box"><anvil-component type="PhotoHunt.Components.Scanner" name="scanner"></anvil-component></div>
+        <anvil-component type="Label" name="ask_error" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+        <p class="fine muted">No code? <a href="#join/CAKE42">Play the Try-me Hunt</a>, any photo counts.</p>
+        <div anvil:name="saved_box" class="jn-saved">
+          <h2>On this tablet</h2>
+          <anvil-component type="RepeatingPanel" name="saved_panel" prop:item_template="PhotoHunt.Items.SavedLink" prop:role='["saved-list"]'></anvil-component>
+        </div>
+      </div>
+
+      <div class="jn-card ui-card" anvil:name="hunt_box">
+        <div class="jn-art"><anvil-component type="PhotoHunt.Components.Cake" name="cake"></anvil-component></div>
+        <anvil-component type="Label" name="title" prop:role='["page-title"]'></anvil-component>
+        <anvil-component type="Label" name="meta" prop:role='["jn-meta"]'></anvil-component>
+        <anvil-component type="Label" name="message_label" prop:role='["jn-message"]'></anvil-component>
+        <a class="ui-btn primary lg jn-continue" anvil:name="continue_link" href="#join"><i class="ic ic-play"></i><span anvil:dom-node="continue_text">Keep playing</span></a>
+        <div anvil:name="kids_box" class="jn-saved">
+          <h2>Play as</h2>
+          <anvil-component type="RepeatingPanel" name="kids_panel" prop:item_template="PhotoHunt.Items.SavedLink" prop:role='["saved-list"]'></anvil-component>
+        </div>
+        <div class="jn-form" anvil:name="form_box">
+          <label class="ui-field"><span>Who's playing?</span>
+            <anvil-component type="TextBox" name="name_box" prop:placeholder="Your name, or a team like Zoe &amp; Sam"></anvil-component></label>
+          <div class="ui-field"><span id="jn-top">Pick your cake topper</span>
+            <div role="group" aria-labelledby="jn-top"><anvil-component type="RepeatingPanel" name="toppers_panel" prop:item_template="PhotoHunt.Items.TopperPick" prop:role='["topper-grid"]'></anvil-component></div></div>
+          <div class="ui-field"><span id="jn-col">Pick a colour</span>
+            <div role="group" aria-labelledby="jn-col"><anvil-component type="RepeatingPanel" name="colours_panel" prop:item_template="PhotoHunt.Items.SwatchPick" prop:role='["swatch-row"]'></anvil-component></div></div>
+          <anvil-component type="Label" name="join_error" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+          <anvil-component type="Button" name="join_button" prop:text="Let's hunt!" prop:role='["btn", "btn-primary", "btn-lg", "btn-block", "ic-arrow"]'></anvil-component>
+        </div>
+        <p class="fine muted"><a href="#join">Use a different code</a></p>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

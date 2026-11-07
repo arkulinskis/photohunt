@@ -1,0 +1,14 @@
+<div class="pr">
+  <span class="pr-rank" anvil:dom-node="rank"></span>
+  <anvil-component type="PhotoHunt.Components.Topper" name="topper" prop:size="40"></anvil-component>
+  <div class="pr-body">
+    <div class="pr-line">
+      <anvil-component type="Label" name="name" prop:role='["pr-name"]' bind:text="self.item['name']"></anvil-component>
+      <anvil-component type="Label" name="here" prop:role='["badge", "badge-good"]' prop:text="Here"></anvil-component>
+      <anvil-component type="Label" name="done" prop:role='["badge", "badge-brand", "ic-trophy"]'></anvil-component>
+    </div>
+    <div class="pr-bar" anvil:dom-node="bar" role="img"><span anvil:dom-node="fill"></span></div>
+    <anvil-component type="Label" name="meta" prop:role='["fine-print"]'></anvil-component>
+  </div>
+  <anvil-component type="Button" name="remove_button" prop:text="Remove" prop:role='["btn", "btn-sm", "btn-icon", "btn-ghost", "ic-x"]'></anvil-component>
+</div>

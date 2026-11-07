@@ -1,0 +1,45 @@
+---
+custom_component: true
+properties:
+  - name: ghost_url
+    type: string
+    default_value: ""
+    description: The grown-up's photo, shown faintly over the live picture to line things up
+  - name: hint
+    type: string
+    default_value: ""
+  - name: shutter_text
+    type: string
+    default_value: Snap!
+events:
+  - name: snapped
+    description: A picture was taken or chosen
+    parameters:
+      - name: media
+      - name: sig
+      - name: url
+  - name: failed
+    parameters:
+      - name: message
+toolbox_item:
+  title: Camera
+  group: PhotoHunt
+help_text: |
+  Live camera with a shutter button, an optional "ghost" of the photo to match, and "Choose a photo" for files.
+  Call start() once it is on screen and stop() when done (pages leaving stop it too).
+---
+<div class="cmp-host"><div class="ph-cam" anvil:dom-node="box">
+  <div class="ph-cam-view">
+    <video anvil:dom-node="video" playsinline muted aria-label="Camera picture"></video>
+    <img class="ph-cam-ghost" alt="" anvil:dom-node="ghost">
+    <span class="ph-cam-frame" aria-hidden="true"></span>
+    <anvil-component type="Label" name="hint_label" prop:role='["ph-cam-hint"]'></anvil-component>
+    <anvil-component type="Label" name="status" prop:role='["ph-cam-status"]' prop:visible="false"></anvil-component>
+  </div>
+  <div class="ph-cam-bar">
+    <label class="ph-cam-file ui-btn" anvil:dom-node="file_label"><i class="ic ic-image"></i><span>Choose a photo</span>
+      <input type="file" accept="image/*" class="ui-sr" anvil:dom-node="file" anvil:on-dom:change="self.file_change"></label>
+    <anvil-component type="Button" name="shutter" prop:text="Snap!" prop:role='["btn", "btn-primary", "ic-camera", "ph-shutter"]'></anvil-component>
+    <anvil-component type="Button" name="ghost_button" prop:text="Ghost" prop:role='["btn", "btn-sm", "btn-ghost", "ic-eye"]' prop:tooltip="Show the photo to match faintly over the camera"></anvil-component>
+  </div>
+</div></div>

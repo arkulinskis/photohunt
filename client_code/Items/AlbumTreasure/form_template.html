@@ -1,0 +1,11 @@
+<div class="at">
+  <div class="at-head">
+    <div class="at-orig"><anvil-component type="PhotoHunt.Components.Photo" name="photo"></anvil-component></div>
+    <div>
+      <anvil-component type="Label" name="name" prop:role='["at-name"]'></anvil-component>
+      <anvil-component type="Label" name="meta" prop:role='["fine-print"]'></anvil-component>
+    </div>
+  </div>
+  <anvil-component type="RepeatingPanel" name="finds_panel" prop:item_template="PhotoHunt.Items.AlbumPhoto" prop:role='["at-snaps"]'></anvil-component>
+  <anvil-component type="Label" name="none" prop:role='["fine-print", "at-none"]' prop:text="Nobody found this one. A tricky treasure!"></anvil-component>
+</div>

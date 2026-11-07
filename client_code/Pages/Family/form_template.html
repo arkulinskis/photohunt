@@ -1,0 +1,15 @@
+<anvil-form layout="PhotoHunt.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap fam">
+      <div class="ui-page-head">
+        <div>
+          <anvil-component type="Label" name="title" prop:role='["page-title"]' prop:text="Your kids"></anvil-component>
+          <p class="page-sub-p">Each kid gets a Kids' corner: open it once on the tablet and they join hunts with one tap and keep their stickers. No accounts or emails for kids.</p>
+        </div>
+        <anvil-component type="Button" name="add_button" prop:text="Add a kid" prop:role='["btn", "btn-primary", "ic-plus"]'></anvil-component>
+      </div>
+      <anvil-component type="RepeatingPanel" name="kids_panel" prop:item_template="PhotoHunt.Items.KidCard" prop:role='["kid-grid"]'></anvil-component>
+      <div class="ui-empty" anvil:name="empty"><i class="ic ic-users"></i><h2>No kids added yet</h2><p>Add a first name or a nickname and pick a cake topper.</p></div>
+    </div>
+  </anvil-block>
+</anvil-form>

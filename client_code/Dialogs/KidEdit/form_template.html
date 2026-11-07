@@ -1,0 +1,18 @@
+<div class="ui ke">
+  <h2 class="dlg-h" anvil:dom-node="heading">Add a kid</h2>
+  <div class="ke-top">
+    <anvil-component type="PhotoHunt.Components.Topper" name="preview" prop:size="72"></anvil-component>
+    <label class="ui-field grow"><span>First name or nickname</span>
+      <anvil-component type="TextBox" name="name_box" prop:placeholder="Mia"></anvil-component></label>
+  </div>
+  <div class="ui-field"><span id="ke-top">Cake topper</span>
+    <div role="group" aria-labelledby="ke-top"><anvil-component type="RepeatingPanel" name="toppers_panel" prop:item_template="PhotoHunt.Items.TopperPick" prop:role='["topper-grid"]'></anvil-component></div></div>
+  <div class="ui-field"><span id="ke-col">Colour</span>
+    <div role="group" aria-labelledby="ke-col"><anvil-component type="RepeatingPanel" name="colours_panel" prop:item_template="PhotoHunt.Items.SwatchPick" prop:role='["swatch-row"]'></anvil-component></div></div>
+  <p class="fine muted">Only a first name or nickname, please: kids don't need accounts and we never ask for their full name.</p>
+  <anvil-component type="Label" name="message" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+  <div class="ui-row end">
+    <anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component>
+    <anvil-component type="Button" name="save_button" prop:text="Save" prop:role='["btn", "btn-primary", "ic-check"]'></anvil-component>
+  </div>
+</div>

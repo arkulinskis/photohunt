@@ -1,0 +1,21 @@
+<div class="ui kl">
+  <h2 class="dlg-h" anvil:dom-node="heading">Kids' corner</h2>
+  <div class="kl-grid">
+    <div class="sh-qr"><anvil-component type="PhotoHunt.Components.QrCode" name="qr" prop:label="QR code for the Kids' corner"></anvil-component></div>
+    <div class="ui-stack">
+      <p anvil:dom-node="intro"></p>
+      <ol class="kl-steps">
+        <li>Open the camera on the kids' tablet and point it at this code.</li>
+        <li>Tap the link. The tablet remembers the Kids' corner from now on.</li>
+        <li>In the corner, the kid joins hunts with one tap and collects stickers.</li>
+      </ol>
+      <label class="ui-field"><span>Link</span><anvil-component type="TextBox" name="link_box"></anvil-component></label>
+      <div class="ui-row">
+        <anvil-component type="Button" name="copy_button" prop:text="Copy link" prop:role='["btn", "btn-sm", "ic-copy"]'></anvil-component>
+        <anvil-component type="Link" name="open_link" prop:text="Open on this device" prop:role='["btn", "btn-sm", "ic-external"]'></anvil-component>
+        <anvil-component type="Button" name="new_button" prop:text="Make a new link" prop:role='["btn", "btn-sm", "btn-ghost", "ic-refresh"]'></anvil-component>
+      </div>
+    </div>
+  </div>
+  <div class="ui-row end"><anvil-component type="Button" name="close_button" prop:text="Done" prop:role='["btn", "btn-primary"]'></anvil-component></div>
+</div>

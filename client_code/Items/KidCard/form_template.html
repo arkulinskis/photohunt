@@ -1,0 +1,12 @@
+<div class="kc">
+  <anvil-component type="PhotoHunt.Components.Topper" name="topper" prop:size="56"></anvil-component>
+  <div class="kc-body">
+    <anvil-component type="Label" name="name" prop:role='["kc-name"]' bind:text="self.item['name']"></anvil-component>
+    <anvil-component type="Label" name="meta" prop:role='["fine-print"]'></anvil-component>
+  </div>
+  <div class="kc-actions">
+    <anvil-component type="Button" name="link_button" prop:text="Kids' corner" prop:role='["btn", "btn-sm", "ic-qr"]'></anvil-component>
+    <anvil-component type="Button" name="edit_button" prop:text="Edit" prop:role='["btn", "btn-sm", "btn-icon", "ic-edit"]'></anvil-component>
+    <anvil-component type="Button" name="delete_button" prop:text="Delete" prop:role='["btn", "btn-sm", "btn-icon", "btn-ghost", "ic-trash"]'></anvil-component>
+  </div>
+</div>

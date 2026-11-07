@@ -1,0 +1,31 @@
+<div class="ui hs">
+  <h2 class="dlg-h" anvil:dom-node="heading">Bake a new hunt</h2>
+  <div class="ui-stack">
+    <label class="ui-field"><span>Name of the hunt</span>
+      <anvil-component type="TextBox" name="title_box" prop:placeholder="Mia's birthday treasure hunt"></anvil-component></label>
+    <div class="hs-two">
+      <label class="ui-field"><span>Birthday kid <em>(optional)</em></span>
+        <anvil-component type="TextBox" name="bday_box" prop:placeholder="Mia"></anvil-component></label>
+      <label class="ui-field"><span>Turning <em>(optional)</em></span>
+        <anvil-component type="DropDown" name="age_drop"></anvil-component></label>
+    </div>
+    <div class="ui-field"><span id="hs-kind">What kind of hunt?</span>
+      <div role="group" aria-labelledby="hs-kind"><anvil-component type="RepeatingPanel" name="kinds_panel" prop:item_template="PhotoHunt.Items.ChoiceTile" prop:role='["choice-grid"]'></anvil-component></div></div>
+    <div class="ui-field"><span id="hs-flav">Cake flavour <em>(the hunt's colours)</em></span>
+      <div role="group" aria-labelledby="hs-flav"><anvil-component type="RepeatingPanel" name="flavours_panel" prop:item_template="PhotoHunt.Items.SwatchPick" prop:role='["swatch-row"]'></anvil-component></div></div>
+    <div class="hs-two">
+      <label class="ui-field"><span>Time limit</span><anvil-component type="DropDown" name="time_drop"></anvil-component></label>
+      <label class="ui-field"><span>How to win</span><anvil-component type="DropDown" name="win_drop"></anvil-component></label>
+      <label class="ui-field"><span>How it starts</span><anvil-component type="DropDown" name="start_drop"></anvil-component></label>
+      <label class="ui-field"><span>Checking photos</span><anvil-component type="DropDown" name="match_drop"></anvil-component></label>
+    </div>
+    <label class="ui-field" anvil:name="strict_field"><span>Magic match strictness</span><anvil-component type="DropDown" name="strict_drop"></anvil-component></label>
+    <label class="ui-field"><span>A message for the kids <em>(optional)</em></span>
+      <anvil-component type="TextArea" name="message_box" prop:placeholder="Happy birthday Mia! Find all the treasures to light your candles." prop:height="70"></anvil-component></label>
+    <anvil-component type="Label" name="message" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+    <div class="ui-row end">
+      <anvil-component type="Button" name="cancel_button" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component>
+      <anvil-component type="Button" name="save_button" prop:text="Bake it" prop:role='["btn", "btn-primary", "ic-cake"]'></anvil-component>
+    </div>
+  </div>
+</div>

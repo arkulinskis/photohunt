@@ -1,0 +1,12 @@
+<div class="tk">
+  <anvil-component type="CheckBox" name="pick" prop:text="" prop:role='["tk-pick"]'></anvil-component>
+  <div class="tk-body">
+    <anvil-component type="Label" name="text" prop:role='["tk-text"]' bind:text="self.item['text']"></anvil-component>
+    <div class="tk-chips">
+      <anvil-component type="Label" name="cat" prop:role='["badge", "badge-brand"]'></anvil-component>
+      <anvil-component type="Label" name="timer" prop:role='["badge", "ic-timer"]'></anvil-component>
+      <anvil-component type="Label" name="proof" prop:role='["badge"]'></anvil-component>
+    </div>
+  </div>
+  <div class="tk-speak"><anvil-component type="PhotoHunt.Components.VoiceButton" name="speak" prop:label="Hear it"></anvil-component></div>
+</div>

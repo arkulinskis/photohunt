@@ -1,0 +1,57 @@
+<anvil-form layout="PhotoHunt.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="play" anvil:name="root">
+      <div anvil:name="gone_box" class="play-gone">
+        <anvil-component type="PhotoHunt.Components.Cake" name="gone_cake" prop:flavour="vanilla" prop:total="3" prop:blown="true"></anvil-component>
+        <h1>Oh no, this game is gone</h1>
+        <anvil-component type="Label" name="gone_text"></anvil-component>
+        <a class="ui-btn primary lg" href="#join"><i class="ic ic-scan"></i>Join a hunt</a>
+      </div>
+      <div anvil:name="game_box" class="play-game">
+        <header class="play-top">
+          <anvil-component type="PhotoHunt.Components.Topper" name="me_topper" prop:size="46"></anvil-component>
+          <anvil-component type="Label" name="me_name" prop:role='["play-me"]'></anvil-component>
+          <span class="play-spacer"></span>
+          <anvil-component type="Label" name="clock" prop:role='["play-clock"]'></anvil-component>
+          <anvil-component type="Label" name="count" prop:role='["play-count"]'></anvil-component>
+          <anvil-component type="Button" name="mute_button" prop:text="Sound on" prop:role='["btn", "btn-icon", "btn-sm", "ic-volume", "play-mute"]'></anvil-component>
+          <a class="play-exit" href="#landing">Grown-ups</a>
+        </header>
+
+        <div class="play-stage">
+          <div class="play-cake" anvil:name="cake_box"><anvil-component type="PhotoHunt.Components.Cake" name="cake"></anvil-component></div>
+          <div class="play-hero">
+            <anvil-component type="Label" name="headline" prop:role='["play-headline"]'></anvil-component>
+            <anvil-component type="Label" name="subline" prop:role='["play-subline"]'></anvil-component>
+            <div class="ui-row play-hero-btns">
+              <anvil-component type="Button" name="go_button" prop:text="Go!" prop:role='["btn", "btn-primary", "btn-lg", "play-go", "ic-play"]'></anvil-component>
+              <anvil-component type="PhotoHunt.Components.VoiceButton" name="intro_voice" prop:big="true" prop:label="Hear the welcome"></anvil-component>
+              <anvil-component type="Button" name="blow_button" prop:text="Blow out the candles!" prop:role='["btn", "btn-primary", "btn-lg", "ic-wand"]'></anvil-component>
+              <anvil-component type="Button" name="tap_button" prop:text="Tap to blow" prop:role='["btn", "btn-lg"]'></anvil-component>
+            </div>
+            <div class="play-level" anvil:name="level_box" aria-hidden="true"><span anvil:dom-node="level"></span></div>
+          </div>
+        </div>
+
+        <section anvil:name="tiles_box" class="play-tiles">
+          <anvil-component type="RepeatingPanel" name="tiles_panel" prop:item_template="PhotoHunt.Items.PlayTile" prop:role='["play-grid"]'></anvil-component>
+        </section>
+
+        <section anvil:name="stickers_box" class="play-stickers">
+          <h2>Your stickers</h2>
+          <anvil-component type="RepeatingPanel" name="stickers_panel" prop:item_template="PhotoHunt.Items.StickerItem" prop:role='["sticker-row"]'></anvil-component>
+        </section>
+
+        <section anvil:name="team_box" class="play-team">
+          <anvil-component type="Label" name="team_title" prop:role='["play-team-title"]'></anvil-component>
+          <anvil-component type="RepeatingPanel" name="team_panel" prop:item_template="PhotoHunt.Items.TeamRow" prop:role='["team-list"]'></anvil-component>
+        </section>
+
+        <div class="play-after" anvil:name="after_box">
+          <a class="ui-btn lg" anvil:name="corner_link" href="#join"><i class="ic ic-star"></i>My Kids' corner</a>
+          <a class="ui-btn lg" href="#join"><i class="ic ic-scan"></i>Play another hunt</a>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

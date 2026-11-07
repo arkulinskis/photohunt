@@ -1,0 +1,46 @@
+<div class="ui fn">
+  <div class="fn-head">
+    <anvil-component type="Label" name="number" prop:role='["fn-number"]'></anvil-component>
+    <anvil-component type="Label" name="title" prop:role='["fn-title"]'></anvil-component>
+  </div>
+  <div anvil:name="show_box" class="fn-show">
+    <div class="fn-pic" anvil:name="pic_box"><anvil-component type="PhotoHunt.Components.Photo" name="photo"></anvil-component></div>
+    <div class="fn-task" anvil:name="task_box"><anvil-component type="Label" name="task_text" prop:role='["fn-task-text"]'></anvil-component></div>
+    <div class="fn-side">
+      <anvil-component type="PhotoHunt.Components.VoiceButton" name="voice" prop:big="true"></anvil-component>
+      <anvil-component type="Label" name="clue" prop:role='["fn-clue"]'></anvil-component>
+      <div class="fn-timer" anvil:name="timer_box">
+        <anvil-component type="Label" name="timer_label" prop:role='["fn-timer-n"]'></anvil-component>
+        <anvil-component type="Button" name="timer_button" prop:text="Start the timer" prop:role='["btn", "ic-timer"]'></anvil-component>
+      </div>
+    </div>
+  </div>
+  <div anvil:name="cam_box" class="fn-cam">
+    <anvil-component type="PhotoHunt.Components.Camera" name="camera" prop:shutter_text="Snap!" prop:hint="Snap the thing, not the people!"></anvil-component>
+  </div>
+  <div anvil:name="result_box" class="fn-result">
+    <div class="fn-snap"><anvil-component type="PhotoHunt.Components.Photo" name="snap"></anvil-component></div>
+    <div class="fn-verdict">
+      <anvil-component type="Label" name="verdict" prop:role='["fn-verdict"]'></anvil-component>
+      <anvil-component type="Label" name="verdict_sub" prop:role='["fn-verdict-sub"]'></anvil-component>
+    </div>
+  </div>
+  <div anvil:name="gate_box" class="fn-gate">
+    <anvil-component type="Label" name="gate_q" prop:role='["fn-gate-q"]'></anvil-component>
+    <div class="fn-gate-a">
+      <anvil-component type="Button" name="a1" prop:role='["btn", "btn-lg"]'></anvil-component>
+      <anvil-component type="Button" name="a2" prop:role='["btn", "btn-lg"]'></anvil-component>
+      <anvil-component type="Button" name="a3" prop:role='["btn", "btn-lg"]'></anvil-component>
+    </div>
+  </div>
+  <anvil-component type="Label" name="message" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+  <div class="fn-actions">
+    <anvil-component type="Button" name="found_button" prop:text="I found it! Take a picture" prop:role='["btn", "btn-primary", "btn-lg", "ic-camera"]'></anvil-component>
+    <anvil-component type="Button" name="done_button" prop:text="I did it!" prop:role='["btn", "btn-primary", "btn-lg", "ic-check"]'></anvil-component>
+    <anvil-component type="Button" name="yes_button" prop:text="Yes, that's it!" prop:role='["btn", "btn-primary", "btn-lg", "ic-check"]'></anvil-component>
+    <anvil-component type="Button" name="retry_button" prop:text="Try again" prop:role='["btn", "btn-lg", "ic-camera"]'></anvil-component>
+    <anvil-component type="Button" name="ask_button" prop:text="Ask a grown-up" prop:role='["btn", "btn-lg", "ic-users"]'></anvil-component>
+    <anvil-component type="Button" name="send_button" prop:text="Send it to the grown-up" prop:role='["btn", "btn-ghost"]'></anvil-component>
+    <anvil-component type="Button" name="back_button" prop:text="Back to the cake" prop:role='["btn", "btn-ghost", "ic-back"]'></anvil-component>
+  </div>
+</div>

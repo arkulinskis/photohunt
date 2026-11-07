@@ -1,0 +1,24 @@
+---
+custom_component: true
+properties:
+  - name: sticker
+    type: string
+    default_value: party
+    description: party, cake, first, speedy, winner, sharp, voice, task or team
+    default_binding_prop: true
+  - name: size
+    type: number
+    default_value: 56
+  - name: show_label
+    type: boolean
+    default_value: false
+    description: Show the sticker's name under it
+  - name: count
+    type: number
+    default_value: 0
+    description: "How many of this sticker (shown as x2, x3 when above 1)"
+toolbox_item:
+  title: Sticker
+  group: PhotoHunt
+---
+<div class="cmp-host"><figure class="ph-sticker" anvil:dom-node="box"><span class="ph-sticker-art" anvil:dom-node="art"></span><figcaption anvil:dom-node="cap"></figcaption><b class="ph-sticker-n" anvil:dom-node="n"></b></figure></div>

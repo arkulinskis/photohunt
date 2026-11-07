@@ -1,0 +1,18 @@
+---
+custom_component: true
+events:
+  - name: scanned
+    description: A QR code was read
+    parameters:
+      - name: text
+  - name: closed
+    description: The person stopped scanning (or the camera failed)
+toolbox_item:
+  title: QR scanner
+  group: PhotoHunt
+---
+<div class="cmp-host"><div class="ph-scan" anvil:dom-node="box">
+  <div class="ph-scan-view"><video anvil:dom-node="video" playsinline muted aria-label="Camera picture for scanning"></video><span class="ph-scan-frame" aria-hidden="true"></span></div>
+  <anvil-component type="Label" name="status" prop:role='["ph-scan-status"]' prop:text="Point the camera at the hunt's QR code."></anvil-component>
+  <anvil-component type="Button" name="cancel_button" prop:text="Stop scanning" prop:role='["btn", "btn-sm", "ic-x"]'></anvil-component>
+</div></div>
