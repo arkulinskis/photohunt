@@ -28,19 +28,21 @@ SEO = {
   "party tasks for kids",
   "voice clue treasure hunt",
   "rainy day games for kids",
-  "free scavenger hunt maker"
+  "free scavenger hunt maker",
+  "photo bingo for kids"
  ],
  "type": "WebApplication",
  "category": "GameApplication",
  "audience": "Parents, grandparents and party hosts planning a birthday party or a rainy afternoon for children aged about 3 to 12",
  "about": [
   "PhotoHunt turns your house into a treasure hunt. Walk around with your phone and snap five to ten things: the teapot, a teddy, a stripy sock. Add a spoken clue in your own voice if you like, pick a cake flavour for the hunt's colours, and show the kids the QR code. They scan it on a tablet, type their name or a team name, pick a cake topper and run off to find each thing and photograph it.",
-  "Magic match compares each snap with your photo, so most finds light a candle on the birthday cake at once; close calls go to you on the live board, or a grown-up says yes on the tablet. There are voice hunts with spoken riddles and task parties with 100 ready-made, indoor-safe tasks. When the cake is full or the clock runs out, the kids blow on the tablet to blow the candles out, win stickers, and you get a party album and printable certificates."
+  "Magic match compares each snap with your photo, so most finds light a candle on the birthday cake at once; close calls go to you on the live board, or a grown-up says yes on the tablet. There are voice hunts with spoken riddles, photo bingo cards for little ones, and task parties with 100 ready-made, indoor-safe tasks, each read by a friendly recorded voice. When the cake is full or the clock runs out, the kids blow on the tablet to blow the candles out, win stickers, and you get a party album and printable certificates."
  ],
  "features": [
   "Photo hunts: snap things around the house, kids find and snap the same things",
   "Voice hunts: record riddles in your own voice; the photo stays secret until it's found",
-  "Task parties with a library of 100 indoor-safe party tasks, timers included",
+  "Task parties with a library of 100 indoor-safe party tasks, each with a friendly recorded voice",
+  "Photo bingo for little ones: big pictures on a bingo card, a full row is a BINGO",
   "Kids join by scanning a QR code: no app and no account for kids",
   "Magic match checks each photo, with a grown-up check for close calls",
   "Race (everyone fills their own cake) or together (one team cake), with or without a timer",
@@ -72,8 +74,8 @@ SEO = {
   ]
  ],
  "free": True,
- "site": "",
- "updated": "2026-11-07",
+ "site": "https://photohunt.anvil.app",
+ "updated": "2026-11-08",
  "icon": "icon-512.png",
  "colors": {
   "bg": "#FFF4F6",
