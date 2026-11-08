@@ -145,6 +145,15 @@ tools/                     check.py, assets.py, build_icons.py, make_icons.py, u
 - **Test hook**: startup.py sets `window.phCall(name, argsJson)` so tools/ui/*.js can make hunts quickly.
 - **Kids' pages** (router.KID_PAGES) get the Shell class `no-chrome` (no header, footer, tab bar).
 
+- **Photo bingo**: Game.bingo_cols / bingo_lines / bingo_done (server), Play.state adds `bingo: {cols, lines, count}`;
+  the Play page sets the tiles panel's roles `play-bingo bingo-c<cols>` and items `_bingo/_line`, and calls
+  `PH.banner("BINGO!")` when the count goes up. The sticker is `bingo` (Game.stickers_for, ph.STICKERS, ph-art.js).
+- **Task voices**: theme/assets/voices/<task id>.mp3. After adding or rewording a library task run
+  `"C:\Program Files\Python311\python.exe" tools/make_task_voices.py --check` (records missing ones; pass ids to redo),
+  then `python tools/assets.py`. test_server.py fails if a task has no clip. Game.lib_voice() sends the id only while the
+  treasure's text still matches the library text; VoiceButton.lib_id plays it (PH.playOrSay falls back to the device voice).
+- **Open example hunts**: CAKE42 and BINGO9 (ph.OPEN_DEMOS); DemoData.ensure_loaded reloads demo data that predates BINGO9.
+
 ## Gotchas
 
 - A top-level page Form and a Form shown in alert() have `parent` None: guard timers with a shown/hidden flag

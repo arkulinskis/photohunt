@@ -5,7 +5,7 @@ from ... import state
 
 
 class TaskRow(TaskRowTemplate):
-    """A task from the library: text, category, timer, proof; "Hear it" reads it aloud. In pick mode a tick box
+    """A task from the library: text, category, timer, proof; "Hear it" plays its recorded voice. In pick mode a tick box
     picks it (x-pick to the page). item = task dict + _cat_label, _pick (show the box), _picked."""
 
     def __init__(self, **properties):
@@ -16,6 +16,7 @@ class TaskRow(TaskRowTemplate):
         self.timer.visible = bool(t["timer"])
         self.proof.text = "Snap a photo" if t["proof"] == "photo" else "Tap when done"
         self.speak.text = t["text"]
+        self.speak.lib_id = t["id"]
         self.pick.visible = bool(t.get("_pick"))
         self.pick.checked = bool(t.get("_picked"))
         self.classes["on"] = bool(t.get("_picked"))

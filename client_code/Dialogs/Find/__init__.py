@@ -38,6 +38,7 @@ class Find(FindTemplate):
         clue_text = treasure.get("clue") or ""
         speak = (treasure["clue"] or treasure["name"]) if task else (clue_text or ("Find %s!" % treasure["name"] if not mystery else ""))
         self.voice.voice_key, self.voice.text = treasure.get("voice_key") or "", speak
+        self.voice.lib_id = (treasure.get("lib_voice") or "") if task else ""
         self.voice.label = "Hear the task" if task else ("Hear the riddle" if mystery else "Hear the clue")
         self.voice.visible = bool(treasure.get("voice_key") or speak)
         self.clue.text = "" if task else clue_text
@@ -47,7 +48,11 @@ class Find(FindTemplate):
         ghost = "" if mystery else ph.photo_url(treasure.get("photo_key"), treasure.get("art"))
         self.camera.ghost_url = ghost or ""
         self._mode("show")
-        if mystery or (task and treasure.get("voice_key")):
+        little = hunt.get("kind") == "bingo"   # photo bingo: little ones hear "Find the teddy!" straight away
+        if little and not task and not clue_text:
+            nm = treasure["name"]
+            self.voice.text = ("Find the %s!" % nm.lower()) if len(nm.split()) <= 2 else ("Find %s!" % nm)
+        if mystery or little or (task and (treasure.get("voice_key") or treasure.get("lib_voice"))):
             window.setTimeout(lambda: self.voice.play(True), 350)
 
     # ---- which parts show

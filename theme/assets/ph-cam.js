@@ -4,7 +4,8 @@
      fingerprint PH.sig64(rgba) on a 64x64 picture (Vision.py on the server compares two of them)
      QR codes    PH.scanStart(video, onText) / PH.scanStop(): BarcodeDetector, else jsQR (ph-qrscan.js, loaded on demand)
      voice       PH.recStart(onLevel) / PH.recStop() -> {blob, seconds, url}; PH.playUrl(url, onEnd); PH.say(text, onEnd)
-     party       PH.sfx(name), PH.confetti(), PH.blowStart(onLevel, onBlown) / PH.blowStop(), PH.countdown(n, onDone)
+     party       PH.sfx(name), PH.confetti(), PH.blowStart(onLevel, onBlown) / PH.blowStop(), PH.countdown(n, onDone),
+                 PH.banner(text) (the big BINGO!)
    Every function returns a Promise or plain values with primitives, so Python can await it (anvil.js). */
 (function () {
   'use strict';
@@ -237,9 +238,17 @@
   PH.playUrl = function (url, onEnd) {
     PH.stopSound();
     var a = new Audio(url); snd.audio = a;
-    a.onended = function () { snd.audio = null; if (onEnd) onEnd(true); };
-    a.onerror = function () { snd.audio = null; if (onEnd) onEnd(false); };
-    return a.play().then(function () { return true; }, function () { if (onEnd) onEnd(false); return false; });
+    var done = false;
+    a.onended = function () { snd.audio = null; if (!done && onEnd) { done = true; onEnd(true); } };
+    a.onerror = function () { snd.audio = null; if (!done && onEnd) { done = true; onEnd(false); } };
+    return a.play().then(function () { return true; }, function () { if (!done && onEnd) { done = true; onEnd(false); } return false; });
+  };
+  /* A recorded library voice, or the device voice if the clip can't play (offline, old browser). */
+  PH.playOrSay = function (url, text, onEnd) {
+    return PH.playUrl(url, function (ok) {
+      if (ok) { if (onEnd) onEnd(true); return; }
+      PH.say(text, onEnd);
+    });
   };
   PH.say = function (text, onEnd) {
     PH.stopSound();
@@ -361,5 +370,15 @@
       if (k-- > 0) setTimeout(step, 800); else setTimeout(function () { el.remove(); if (onDone) onDone(); }, 700);
     };
     step();
+  };
+
+  /* ---------------------------------------------------------------- BINGO! (photo bingo lines) */
+  PH.banner = function (text) {
+    var el = document.createElement('div');
+    el.className = 'ph-count ph-bingo beat'; el.setAttribute('role', 'status');
+    el.textContent = text || 'Bingo!';
+    document.body.appendChild(el);
+    PH.sfx('tada'); PH.confetti();
+    setTimeout(function () { el.remove(); }, 1500);
   };
 })();

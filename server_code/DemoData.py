@@ -1,14 +1,15 @@
 """Demo content, so the app never looks empty. Loaded automatically the first time anyone opens Party HQ
 (ensure_loaded), removed or reloaded from Admin -> Demo data. Removing it is remembered: it doesn't come back.
 
-The demo family (a demo user that can't sign in) owns four example hunts, drawn with the cartoon objects in
+The demo family (a demo user that can't sign in) owns five example hunts, drawn with the cartoon objects in
 theme/assets/demo-*.svg instead of photos:
   - Mia's 6th Birthday Hunt: a finished photo race with five players, so the album and results have something to show
     (incl. a very long team name and a player with a single find: the design kit's worst cases);
   - Try-me Hunt, code CAKE42: open to anyone from the landing page. Any photo counts and visitors' photos are never
     stored (Play.py); visitor players are tidied away after a day;
   - Leo's Dino Party: a task party waiting in the lobby;
-  - Grandpa's Riddle Hunt: a voice hunt with spoken riddles (read by the device's voice: demo hunts have no recordings).
+  - Grandpa's Riddle Hunt: a voice hunt with spoken riddles (read by the device's voice: demo hunts have no recordings);
+  - Little Sam's Photo Bingo, code BINGO9: a 3x3 bingo card for little ones, open to anyone like CAKE42.
 Every demo row has is_demo=True; remove() deletes demo hunts with everything in them (visitors' plays too).
 """
 import datetime as dt
@@ -20,6 +21,7 @@ from . import Game, TaskLibrary
 
 DEMO_EMAIL = "demo.family@example.com"
 TRY_CODE = "CAKE42"
+BINGO_CODE = "BINGO9"
 DEMO_TABLES = ["finds", "players", "treasures", "hunts", "kids"]
 
 MIA_TREASURES = [
@@ -52,6 +54,17 @@ RIDDLES = [
     ("toothbrush", "A toothbrush", "I help you smile at night and in the morning. I live near the sink."),
     ("plant", "The plant", "I drink water but never get up for a glass. I'm green!"),
 ]
+BINGO_TREASURES = [
+    ("teddy", "Teddy", "Find a teddy!"),
+    ("duck", "Duck", "Quack quack! Find the duck."),
+    ("ball", "Ball", "Find a ball."),
+    ("banana", "Banana", "Find a banana."),
+    ("book", "Book", "Find a book."),
+    ("sock", "Sock", "Find a sock."),
+    ("teapot", "Teapot", "Find a teapot or a cup."),
+    ("clock", "Clock", "Find a clock. Tick tock!"),
+    ("plant", "Plant", "Find a plant."),
+]
 LEO_TASKS = ["m01", "s01", "f02", "k02", "p01", "h02"]
 
 
@@ -61,8 +74,8 @@ def state():
 
 def ensure_loaded():
     """Call from the app's main data callables: loads the demo once, unless an admin removed it."""
-    if state() == "never":
-        load()
+    if state() == "never" or (state() == "loaded" and app_tables.hunts.get(code=BINGO_CODE) is None):
+        load()  # first visit, or demo data from before photo bingo existed
 
 
 def _hunt(owner, code, created, **kw):
@@ -136,6 +149,13 @@ def load():
                time_limit=0, start_mode="self", strictness="easy",
                message="Listen to each riddle, then find the answer and snap it.")
     _treasures(gp, RIDDLES, now - dt.timedelta(days=8))
+
+    # 5. Little Sam's photo bingo: a 3x3 card anyone can play (like CAKE42)
+    sam = _hunt(fam, BINGO_CODE, now - dt.timedelta(days=12), title="Little Sam's Photo Bingo", kind="bingo",
+                birthday_name="Sam", birthday_age=3, flavour="vanilla", time_limit=0, start_mode="self",
+                match_mode="honour", strictness="easy", status="live", started=now - dt.timedelta(days=12),
+                message="Bingo time! Find the pictures. A whole row is a BINGO!")
+    _treasures(sam, BINGO_TREASURES, now - dt.timedelta(days=12))
     C.set_setting("demo", "loaded")
     return counts()
 

@@ -29,6 +29,7 @@ class Play(PlayTemplate):
         self._busy = False
         self._celebrated = False
         self._tiles_sig = ""
+        self._bingos = -1   # photo bingo: lines already celebrated (-1 = not drawn yet)
         self.tiles_panel.add_event_handler("x-open", self._open)
         self._level = anvil.js.report_exceptions(self._on_level)
         self._blown_cb = anvil.js.report_exceptions(self._blown)
@@ -130,6 +131,12 @@ class Play(PlayTemplate):
             self.subline.text = "Find all %d %s! When you press Go, your clock starts." % (
                 r["total"], "treasures" if h["kind"] != "task" else "tasks") if h["time_limit"] else "Find all %d! Press Go when you're ready." % r["total"]
             self.team_title.text = "Also playing"
+        elif phase == "hunt" and r.get("bingo"):
+            n = r["bingo"]["count"]
+            self.headline.text = "Photo bingo!" if not n else ("BINGO!" if n == 1 else "%d BINGOs!" % n)
+            self.subline.text = "Find a whole row for a BINGO. Find them all to light every candle!"
+            self.team_title.text = "Team" if together else "Also playing"
+            self._tiles(r)
         elif phase == "hunt":
             self.headline.text = "Find them all!" if h["kind"] != "task" else "Do them all!"
             self.subline.text = ("Every find lights a candle on the cake. %s" % ("Team cake: everyone's finds count!" if together else "")).strip()
@@ -152,7 +159,16 @@ class Play(PlayTemplate):
         if sig != self._tiles_sig:
             key = state.focus_key()
             self._tiles_sig = sig
-            self.tiles_panel.items = r["treasures"]
+            b = r.get("bingo")
+            if b:
+                cells = set(i for line in b["lines"] for i in line)
+                self.tiles_panel.role = ["play-grid", "play-bingo", "bingo-c%d" % b["cols"]]
+                self.tiles_panel.items = [dict(t, _bingo=True, _line=i in cells) for i, t in enumerate(r["treasures"])]
+                if 0 <= self._bingos < b["count"]:
+                    window.PH.banner("BINGO!")
+                self._bingos = b["count"]
+            else:
+                self.tiles_panel.items = r["treasures"]
             if key:
                 state.refocus(self.tiles_panel, key)
 
@@ -171,6 +187,8 @@ class Play(PlayTemplate):
             self.headline.text = "Team cake complete!" if full else "Your team lit %d candles!" % r["found"]
         elif full and me.get("rank") == 1:
             self.headline.text = "You lit every candle first!"
+        elif full and r.get("bingo"):
+            self.headline.text = "Full card! Every candle is lit!"
         elif full:
             self.headline.text = "You lit every candle!"
         else:

@@ -7,7 +7,8 @@ STATE = {"found": "Found!", "review": "Checking...", "rejected": "Try again", "t
 
 class PlayTile(PlayTileTemplate):
     """A treasure on the kid's play screen: a big button with its picture (or a mystery card, or a task star), and
-    Found! / Checking... / Try again. A click raises x-open. item = the play treasure dict."""
+    Found! / Checking... / Try again. A click raises x-open. item = the play treasure dict (+ _bingo: a square on a
+    photo bingo card, stamped when found; _line: part of a finished BINGO line)."""
 
     def __init__(self, **properties):
         super().__init__(**properties)
@@ -35,6 +36,8 @@ class PlayTile(PlayTileTemplate):
             b.classList.toggle("is-" + s, st == s)
         b.setAttribute("aria-label", "%s%s" % (name, (": " + STATE[st]) if STATE.get(st) else ""))
         b.setAttribute("data-key", t["id"])
+        b.classList.toggle("bingo", bool(t.get("_bingo")))
+        b.classList.toggle("in-line", bool(t.get("_line")))
 
     def btn_click(self, event):
         self.parent.raise_event("x-open", treasure=self.item)

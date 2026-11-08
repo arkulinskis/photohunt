@@ -5,7 +5,7 @@ ph-cam.js, reached as window.PH), and the games this tablet remembers.
     ph.voice_url(key)           a voice clip's address
     ph.games() / remember_game  hunts joined on this tablet: {code: {"token", "name", "title"}}
     ph.kid_corners()            Kids' corner links opened on this tablet
-    ph.say_clue(key, text, cb)  play the grown-up's recording, or read the text with the device's voice
+    ph.say_clue(key, text, cb, lib)  play the grown-up's recording, a library task's voice, or the device's voice
     ph.err_text(e)              the readable message of a failed engine call (a rejected Promise)
 """
 import json
@@ -19,7 +19,9 @@ KINDS = [
     ("voice", "Voice hunt", "You record a spoken clue for each thing. Kids listen, find it and snap it.", "volume"),
     ("task", "Task party", "Kids do fun tasks you record, or pick from 100 party tasks.", "star"),
     ("mix", "Party mix", "Things to find and tasks to do, all in one hunt.", "gift"),
+    ("bingo", "Photo bingo", "Big pictures on a bingo card, for little ones. A full row is a BINGO!", "grid"),
 ]
+OPEN_DEMOS = ("CAKE42", "BINGO9")  # example hunts anyone can play (any photo counts, no photos kept)
 KIND_LABEL = {k: label for k, label, _, _ in KINDS}
 FLAVOURS = [("strawberry", "Strawberry"), ("chocolate", "Chocolate"), ("vanilla", "Vanilla"), ("mint", "Mint choc"),
             ("blueberry", "Blueberry"), ("lemon", "Lemon")]
@@ -37,6 +39,7 @@ STICKERS = {
     "voice": ("Good ears", "Solved spoken clues"),
     "task": ("Task star", "Did three or more tasks"),
     "team": ("Team cake", "Filled the cake together"),
+    "bingo": ("Bingo!", "Got a whole line on a bingo card"),
 }
 TIME_LIMITS = [(0, "No time limit"), (5, "5 minutes"), (10, "10 minutes"), (15, "15 minutes"), (20, "20 minutes"),
                (30, "30 minutes"), (45, "45 minutes"), (60, "1 hour")]
@@ -203,11 +206,19 @@ def stop_sound():
     window.PH.stopSound()
 
 
-def say_clue(key=None, text=None, on_end=None):
-    """Play the recorded clue, or read the text aloud. on_end(ok) is called when it stops."""
+def task_voice_url(task_id):
+    """The friendly recorded voice of a library task (tools/make_task_voices.py)."""
+    return "_/theme/voices/%s.mp3" % task_id
+
+
+def say_clue(key=None, text=None, on_end=None, lib=None):
+    """Play the grown-up's recording, else the library task's recorded voice, else read the text with the device's
+    voice. on_end(ok) is called when it stops."""
     cb = anvil.js.report_exceptions(on_end) if on_end else None
     if key:
         window.PH.playUrl(voice_url(key), cb)
+    elif lib:
+        window.PH.playOrSay(task_voice_url(lib), text or "", cb)
     elif text:
         window.PH.say(text, cb)
     elif on_end:

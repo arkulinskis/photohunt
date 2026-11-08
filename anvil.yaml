@@ -553,9 +553,10 @@ db_schema:
     server: full
     title: Users
 metadata:
-  description: "Make a photo scavenger hunt in five minutes: snap things at home, kids scan a QR code and race to find and photograph them."
-  logo_img: "asset:icon-512.png"
-  title: "PhotoHunt: a photo treasure hunt for kids' birthday parties"
+  description: 'Make a photo scavenger hunt in five minutes: snap things at home, kids scan a QR code and race to find and
+    photograph them.'
+  logo_img: asset:icon-512.png
+  title: 'PhotoHunt: a photo treasure hunt for kids'' birthday parties'
 name: PhotoHunt
 native_deps:
   head_html: |
@@ -598,11 +599,11 @@ native_deps:
     <!-- Prepsto feedback panel: every "Submit feedback" link and button opens it (it is the only feedback channel). No floating button, no cookies, nothing loads until it is opened. Codes: APP_MAKER/prepsto-links.json -->
     <script src="https://prepsto.com/_/theme/widget.js" data-prepsto="8tb2pwh" data-button="false" data-label="Submit feedback" async></script>
     <link rel="stylesheet" href="_/theme/icons.css?v=c5d6530225">
-    <link rel="stylesheet" href="_/theme/app.css?v=cbab39a8bd">
+    <link rel="stylesheet" href="_/theme/app.css?v=2bb0a71446">
     <meta name="ph-qrscan" content="_/theme/ph-qrscan.js?v=1a9709d79f">
     <script src="_/theme/ph-qrgen.js?v=e830b4bcc5"></script>
-    <script src="_/theme/ph-art.js?v=61bd80a183"></script>
-    <script src="_/theme/ph-cam.js?v=0edfd91fe1"></script>
+    <script src="_/theme/ph-art.js?v=cb02f2680b"></script>
+    <script src="_/theme/ph-cam.js?v=3da9808e52"></script>
     <script src="_/theme/app-kit.js?v=46475adabd"></script>
 package_name: PhotoHunt
 runtime_options:

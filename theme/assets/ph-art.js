@@ -141,6 +141,7 @@
     sharp:  ['#22B07F', '<path d="M8 24c4-7 10-10 16-10s12 3 16 10c-4 7-10 10-16 10S12 31 8 24z" fill="#fff"/><circle cx="24" cy="24" r="6" fill="#4A7BF0"/><circle cx="24" cy="24" r="2.5" fill="' + INK + '"/>'],
     voice:  ['#4A7BF0', '<path d="M12 20h6l8-7v22l-8-7h-6z" fill="#fff"/><path d="M30 18c3 3 3 9 0 12M34 14c5 5 5 15 0 20" fill="none" stroke="#FFC234" stroke-width="2.6" stroke-linecap="round"/>'],
     task:   ['#FF8A3D', '<circle cx="24" cy="24" r="13" fill="#FFC234"/><path d="M24 15l2.6 5.4 5.9.8-4.3 4.2 1 5.8L24 28.4l-5.2 2.8 1-5.8-4.3-4.2 5.9-.8z" fill="#fff"/>'],
+    bingo:  ['#22B07F', '<rect x="12" y="12" width="24" height="24" rx="3" fill="#fff"/><path d="M20 12v24M28 12v24M12 20h24M12 28h24" stroke="#22B07F" stroke-width="1.5"/><circle cx="16" cy="16" r="2.6" fill="#FF6FA3"/><circle cx="24" cy="24" r="2.6" fill="#FF6FA3"/><circle cx="32" cy="32" r="2.6" fill="#FF6FA3"/><path d="M13 13l22 22" stroke="#C2255C" stroke-width="2.6" stroke-linecap="round"/>'],
     team:   ['#C2255C', '<path d="M24 36s-11-6.5-11-14.5A6 6 0 0 1 24 18a6 6 0 0 1 11 3.5C35 29.5 24 36 24 36z" fill="#FF9DBD"/><circle cx="16" cy="13" r="4" fill="#FFC234"/><circle cx="32" cy="13" r="4" fill="#22B07F"/>']
   };
   PH.stickerSvg = function (o) {

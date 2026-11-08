@@ -160,12 +160,14 @@ assert V.verdict(0.9, "normal") == "found" and V.verdict(V.THRESHOLD["normal"] -
 as_user(None)
 lib = call("task_library")
 assert len(lib["tasks"]) == 100 and len({t["id"] for t in lib["tasks"]}) == 100 and sum(c["count"] for c in lib["categories"]) == 100
+missing_voice = [t["id"] for t in lib["tasks"] if not (PROJECT / "theme" / "assets" / "voices" / (t["id"] + ".mp3")).exists()]
+assert not missing_voice, "tasks without a recorded voice (run tools/make_task_voices.py): %s" % missing_voice
 
 # Party HQ + demo
 assert denied("get_hq")
 as_user(ana)
 hq = call("get_hq")
-assert M["DemoData"].state() == "loaded" and len(hq["examples"]) == 4 and hq["hunts"] == [] and hq["kids"] == []
+assert M["DemoData"].state() == "loaded" and len(hq["examples"]) == 5 and hq["hunts"] == [] and hq["kids"] == []
 mia = next(h for h in hq["examples"] if h["birthday_name"] == "Mia")
 assert mia["counts"]["players"] == 5 and mia["cover"]["art"].endswith("demo-teapot.svg")
 bad(call("update_hunt", mia["id"], {"title": "Mine now"}), "demo hunts are read-only")
@@ -273,6 +275,9 @@ h2 = ok(call("create_hunt", {"title": "Task party", "kind": "task", "time_limit"
 ok(call("add_library_tasks", h2["id"], ["m01", "f01"]))
 tk = call("get_hunt", h2["id"])["treasures"]
 assert tk[0]["kind"] == "task" and tk[0]["proof"] == "done" and tk[1]["proof"] == "photo"
+assert tk[0]["lib_voice"] == "m01", "library tasks play their recorded voice"
+ok(call("save_treasure", h2["id"], tk[1]["id"], {"kind": "task", "name": tk[1]["name"], "clue": tk[1]["clue"] + " Go!", "proof": "photo"}))
+assert call("get_hunt", h2["id"])["treasures"][1]["lib_voice"] == "", "a reworded task falls back to the device voice"
 ok(call("start_hunt", h2["id"]))
 as_user(None)
 a_tok = ok(call("join_hunt", h2["code"], "Ava", "flower", "berry"))["token"]
@@ -329,6 +334,26 @@ st = ok(call("go", try_tok))
 r = ok(call("submit_find", try_tok, st["treasures"][0]["id"], JPEG, sig(5)))
 assert r["result"] == "found" and T.finds.search(player=T.players.get(token=try_tok))[0]["photo"] is None
 
+# library tasks carry their recorded voice, unless the grown-up reworded them
+G = M["Game"]
+assert G.bingo_cols(4) == 2 and G.bingo_cols(9) == 3 and G.bingo_cols(12) == 4
+assert len(G.bingo_lines(9)) == 8 and len(G.bingo_lines(4)) == 6 and len(G.bingo_lines(6)) == 5
+assert G.bingo_done(9, [0, 1, 2]) == [[0, 1, 2]] and G.bingo_done(9, [0, 4, 8]) == [[0, 4, 8]] and G.bingo_done(9, [0, 1, 5]) == []
+assert all(max(line) < 7 for line in G.bingo_lines(7)), "lines never point past the last picture"
+
+# photo bingo (demo BINGO9): a card of 9, a row is a BINGO, the bingo sticker
+as_user(None)
+b_tok2 = ok(call("join_hunt", "bingo9", "Little One", "heart", "pink"))["token"]
+st = ok(call("go", b_tok2))
+assert st["bingo"]["cols"] == 3 and st["bingo"]["count"] == 0 and st["total"] == 9 and st["hunt"]["kind"] == "bingo"
+for i in range(3):
+    st = ok(call("submit_find", b_tok2, st["treasures"][i]["id"], JPEG, sig(7)))
+assert st["bingo"]["count"] == 1 and st["bingo"]["lines"] == [[0, 1, 2]] and st["phase"] == "hunt"
+for i in range(3, 9):
+    st = ok(call("submit_find", b_tok2, st["treasures"][i]["id"], JPEG, sig(7)))
+assert st["phase"] == "done" and st["bingo"]["count"] == 8 and "bingo" in st["player"]["stickers"], st["player"]["stickers"]
+assert call("play_state", b_tok2)["treasures"][0]["lib_voice"] == "", "finds have no library voice"
+
 # family + Kids' corner
 as_user(ana)
 bad(call("add_kid", " "))
@@ -366,7 +391,7 @@ assert call("get_hq")["examples"] == [] and M["DemoData"].state() == "removed", 
 as_user(admin)
 ok(call("demo_load"))
 ok(call("demo_load"))
-assert len(T.hunts.search(is_demo=True)) == 4 and T.hunts.get(code="CAKE42") is not None, "reloading replaces the demo"
+assert len(T.hunts.search(is_demo=True)) == 5 and T.hunts.get(code="CAKE42") is not None, "reloading replaces the demo"
 
 # ---------------------------------------------------------------------------------- Privacy & Terms
 if "legal_server" in M:

@@ -5,10 +5,11 @@ from ... import ph
 
 
 class VoiceButton(VoiceButtonTemplate):
-    """Plays the grown-up's recorded clue, or reads the text aloud with the device's voice. Press again to stop."""
+    """Plays the grown-up's recorded clue, a library task's recorded voice (lib_id), or reads the text aloud with the
+    device's voice. Press again to stop."""
 
     def __init__(self, **properties):
-        self._o: dict = {"voice_key": "", "text": "", "label": "Hear the clue", "big": False}
+        self._o: dict = {"voice_key": "", "text": "", "lib_id": "", "label": "Hear the clue", "big": False}
         self._ready = False
         self._playing = False
         super().__init__(**properties)
@@ -37,7 +38,7 @@ class VoiceButton(VoiceButtonTemplate):
             return
         self._playing = True
         self._draw()
-        ph.say_clue(self._o["voice_key"], self._o["text"], self._done)
+        ph.say_clue(self._o["voice_key"], self._o["text"], self._done, self._o["lib_id"])
 
     def _done(self, ok=True):
         self._playing = False
@@ -67,6 +68,14 @@ class VoiceButton(VoiceButtonTemplate):
     @text.setter
     def text(self, value):
         self._set("text", value or "")
+
+    @property
+    def lib_id(self):
+        return self._o["lib_id"]
+
+    @lib_id.setter
+    def lib_id(self, value):
+        self._set("lib_id", value or "")
 
     @property
     def label(self):

@@ -10,6 +10,7 @@ EMPTY = {
     "voice": "Snap a treasure, then record a clue in your voice. Kids hear the clue, not the photo.",
     "task": "Add fun tasks from the library of 100, or write your own and record yourself saying it.",
     "mix": "Snap things to find and add a few tasks: a little of everything.",
+    "bingo": "Snap 4, 6 or 9 easy things (a teddy, a ball, a cup). They become a bingo card with big pictures.",
 }
 
 
@@ -56,10 +57,10 @@ class Hunt(HuntTemplate):
         state.set_attr(self.album_link, "href", router.href("album", h["id"]))
         state.set_attr(self.example_album, "href", router.href("album", h["id"]))
         state.set_attr(self.example_play, "href", router.href("join", h["code"]))
-        self.example_play.visible = h["code"] == "CAKE42"
+        self.example_play.visible = h["code"] in ph.OPEN_DEMOS
         self.intro_rec.voice_key = h.get("intro_key") or ""
         k = h["kind"]
-        self.add_find_button.visible = k in ("photo", "voice", "mix")
+        self.add_find_button.visible = k in ("photo", "voice", "mix", "bingo")
         self.add_lib_button.visible = self.add_task_button.visible = k in ("task", "mix")
         self.add_find_button.text = "Add a voice clue" if k == "voice" else "Snap a treasure"
         n = len(ts)

@@ -4,7 +4,7 @@ from anvil import *
 from ._anvil_designer import KidTemplate
 from ... import ph, router, state
 
-ORDER = ["cake", "winner", "first", "speedy", "sharp", "voice", "task", "team", "party"]
+ORDER = ["cake", "winner", "bingo", "first", "speedy", "sharp", "voice", "task", "team", "party"]
 
 
 class Kid(KidTemplate):

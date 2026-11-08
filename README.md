@@ -12,9 +12,9 @@ RepeatingPanels).
 ## What it does
 
 **For grown-ups (account, 16+)**
-- **Party HQ** (`#home`): your hunts as cake cards (flavour colours, status, code), your kids, four example hunts to open,
+- **Party HQ** (`#home`): your hunts as cake cards (flavour colours, status, code), your kids, five example hunts to open,
   play or copy ("Make one like this").
-- **Bake a hunt** (settings dialog): name, birthday kid + age, kind (Photo hunt, Voice hunt, Task party, Party mix), cake
+- **Bake a hunt** (settings dialog): name, birthday kid + age, kind (Photo hunt, Voice hunt, Task party, Party mix, Photo bingo), cake
   flavour (strawberry, chocolate, vanilla, mint choc, blueberry, lemon), time limit (none to 1 hour), race (own cake each)
   or together (one team cake), start together (grown-up presses Start) or self-start (each kid's own clock), photo
   checking (Magic match with easy / just right / tricky, I check every photo, every photo counts), a message for the kids.
@@ -29,7 +29,7 @@ RepeatingPanels).
   certificates (one page per kid), "Delete kids' photos".
 - **Kids** (`#family`): kid profiles (first name, cake-topper avatar, colour) and each one's private Kids' corner link as a
   QR code (new link stops the old one).
-- **100 party tasks** (`#tasks`, public): 7 categories, search, "Hear it" (device voice); signed-in grown-ups add ticked
+- **100 party tasks** (`#tasks`, public): 7 categories, search, "Hear it" (a recorded voice per task, theme/assets/voices, `tools/make_task_voices.py`); signed-in grown-ups add ticked
   tasks to a task hunt.
 
 **For kids (no account)**
@@ -38,20 +38,26 @@ RepeatingPanels).
 - **Play** (`#play/<token>`, no header): lobby (wait for Start, hear the welcome) or Go! (own clock), 3-2-1 countdown,
   the cake with one candle per treasure, big tiles (photo, mystery card for voice hunts, task star), the race
   scoreboard, the clock, sound on/off.
-- **Find screen** (dialog): the photo or the riddle/clue read aloud (recording or device voice), task timer, live
+- **Find screen** (dialog): the photo or the riddle/clue read aloud (the grown-up's recording, the library task's recorded voice, or the device voice), task timer, live
   camera with a faint "ghost" of the grown-up's photo, Snap!, then You found it! (ding + sprinkles) / So close / Not
   quite, Ask a grown-up (a grown-ups-only sum, then yes/no on the spot) or send it to the grown-up's board.
 - **The end**: full cake or time's up, place in the race, stickers (party hat, whole cake, first find, speedy, winner,
   sharp eyes, good ears, task star, team cake), blow out the candles (microphone; or tap), results.
 - **Kids' corner** (`#kid/<token>`): hello, join a hunt with one tap (no name to type), my hunts, my sticker book.
+- **Photo bingo** (kind `bingo`, for little ones): the treasures become a bingo card (2x2 up to 4, 3 across up to 9,
+  then 4 across) of big pictures with names; opening one says "Find the teddy!" at once; found pictures get a stamp;
+  a full row, column or diagonal is a BINGO (big banner, confetti, the row lights up, the Bingo! sticker); the full card
+  lights every candle. Picking it for a new hunt sets no time limit and easy matching.
+- **Task voices**: every library task has a friendly recorded voice (Kokoro af_heart, theme/assets/voices/<id>.mp3,
+  `tools/make_task_voices.py`); a task the grown-up rewords, or a clip that won't play, falls back to the device voice.
 
 **Magic match**: the browser makes a 212-number fingerprint of each photo (colour bins, edge directions, layout:
 theme/assets/ph-cam.js `PH.sig64`); the server scores it against the grown-up's (server_code/Vision.py). Calibrated with
 `python tools/testing/vision_test.py` (retakes vs different photos).
 
-**Demo**: four example hunts drawn with cartoon objects (theme/assets/demo-*.svg, `tools/make_demo_art.py`): a finished
+**Demo**: five example hunts drawn with cartoon objects (theme/assets/demo-*.svg, `tools/make_demo_art.py`): a finished
 race with five players (album), the Try-me Hunt **CAKE42** anyone can play (any photo counts, no photos kept), a task party
-in the lobby, a voice riddle hunt.
+in the lobby, a voice riddle hunt. Little Sam's Photo Bingo, code **BINGO9**, is open to anyone like CAKE42 (a 3x3 card).
 
 ## Setting it up in Anvil (once)
 

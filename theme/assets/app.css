@@ -968,6 +968,25 @@ anvil-dropzone { display: contents; }
 .ph-count.beat { animation: ph-beat 700ms var(--ease-expo) both; }
 @keyframes ph-beat { from { transform: scale(1.5); opacity: 0; } 40% { opacity: 1; } }
 
+/* ---------------------------------------------------------------- photo bingo (kind "bingo", little ones) */
+.anvil-role-play-bingo > div { grid-template-columns: repeat(var(--bingo-cols, 3), minmax(0, 1fr)); max-width: 720px; margin: 0 auto; }
+.anvil-role-bingo-c2 { --bingo-cols: 2; }
+.anvil-role-bingo-c3 { --bingo-cols: 3; }
+.anvil-role-bingo-c4 { --bingo-cols: 4; }
+.pt.bingo { padding: 8px 8px 10px; gap: 6px; }
+.pt.bingo .pt-num { display: none; }
+.pt.bingo .pt-name { font: 700 clamp(1rem, 3.2vw, 1.35rem)/1.15 var(--font-display); text-align: center; }
+.pt.bingo .pt-state { text-align: center; font-size: .85rem; }
+.pt.bingo.is-found .pt-state { display: none; }
+.pt-stamp { display: none; }
+.pt.bingo.is-found .pt-stamp { position: absolute; z-index: 4; inset: 8px 8px auto; aspect-ratio: 1; display: grid; place-items: center; pointer-events: none; }
+.pt.bingo.is-found .pt-dot { width: 46%; aspect-ratio: 1; display: grid; place-items: center; border-radius: 50%; background: color-mix(in srgb, var(--c-brand) 88%, transparent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, #fff 75%, transparent), 0 6px 14px rgba(58, 30, 42, .25); transform: rotate(-12deg); animation: pt-stamp var(--dur-base) var(--ease-out) both; }
+.pt.bingo.is-found .pt-dot .ic { width: 56%; height: 56%; color: #fff; }
+@keyframes pt-stamp { from { opacity: 0; transform: rotate(-12deg) scale(1.3); } }
+.pt.bingo.in-line { border-color: var(--c-accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c-accent) 60%, transparent); }
+.ph-bingo { font-size: clamp(4.5rem, 20vw, 11rem); letter-spacing: .02em; color: var(--c-brand); text-shadow: 0 6px 0 color-mix(in srgb, var(--c-accent) 80%, transparent); }
+
 /* ---------------------------------------------------------------- phones and tablets */
 @media (max-width: 900px) {
   .hk-head { grid-template-columns: 110px minmax(0, 1fr); }
@@ -1034,6 +1053,7 @@ anvil-dropzone { display: contents; }
   .lp-pola { animation-name: kit-fade; }
   .lp-party .ph-candle.lit .ph-flame { animation: kit-fade 300ms ease both !important; }
   .ph-count.beat { animation-name: kit-fade; }
+  .pt.bingo.is-found .pt-dot { animation-name: kit-fade; }
   .hc, .pt, .ph-choice, .ph-swatch, .ph-topper-pick { transition-property: border-color, background-color; }
 }
 

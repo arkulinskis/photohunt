@@ -144,7 +144,7 @@ def main():
         dest = pathlib.Path(args[args.index("--shots") + 1])
         guest = [("landing", "#landing"), ("auth", "#auth/signup"), ("join", "#join"), ("join-hunt", "#join/CAKE42"), ("tasks", "#tasks")]
         member = [("home", "#home"), ("hunt", "window.SEED.hunt"), ("live", "window.SEED.live"), ("album", "window.SEED.album"),
-                  ("family", "#family"), ("play", "window.SEED.play"), ("play-go", "window.SEED.visitor"), ("kid", "window.SEED.kid"),
+                  ("family", "#family"), ("play", "window.SEED.play"), ("play-go", "window.SEED.visitor"), ("bingo", "window.SEED.bingo"), ("kid", "window.SEED.kid"),
                   ("profile", "#profile")]
         for window, tag in (("1280,1000", ""), ("390,844", "_phone")):
             for theme in ("light", "dark"):

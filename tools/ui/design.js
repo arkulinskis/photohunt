@@ -19,6 +19,24 @@
     const j = await phCall('join_hunt', 'CAKE42', 'Page Tester', 'star', 'pink');
     return j.token;
   }
+  async function bingoPage(cells) {  // photo bingo (BINGO9) with a finished row: snapped with the (fake) camera
+    const qa = (s) => Array.from(document.querySelectorAll(s));
+    const shown = (e) => e && e.getBoundingClientRect().width > 0;
+    const b = (await phCall('join_hunt', 'BINGO9', 'Little Sam', 'heart', 'pink')).token;
+    await phCall('go', b);
+    window.UI_READY = false; location.hash = '#play/' + b;
+    await until(() => window.UI_READY && qa('.pt.bingo').length === 9, 'bingo card', 40000);
+    const todo = cells || [0, 1, 2];
+    for (let n = 0; n < todo.length; n++) {
+      qa('.pt.bingo')[todo[n]].click();
+      (await until(() => qa('.anvil-modal button').find((x) => shown(x) && /I found it/.test(x.textContent)), 'bingo find dialog')).click();
+      await until(() => { const v = document.querySelector('.anvil-modal .ph-cam video'); return v && v.videoWidth > 0; }, 'camera', 20000);
+      document.querySelector('.anvil-modal .anvil-role-ph-shutter button').click();
+      await until(() => !qa('.anvil-modal').some((m) => shown(m) && m.querySelector('.fn')) && qa('.pt.bingo.is-found').length === n + 1, 'bingo stamp', 30000);
+    }
+    await sleep(1800);  // the BINGO! banner has gone
+    return b;
+  }
   async function memberPages() {
     const hq = await phCall('get_hq');
     const demo = (hq.examples.find((h) => h.birthday_name === 'Mia') || hq.examples[0]).id;
@@ -165,6 +183,8 @@
     await phCall('go', tok);
     await page('#landing');
     await page('#play/' + tok); await until(() => $$('.pt').length === 5, 'tiles'); scan('#play (hunt) ' + w);
+    const btok = await bingoPage();
+    await page('#play/' + btok); await until(() => $$('.pt.bingo.in-line').length === 3, 'bingo card'); await sleep(1800); scan('#play (bingo) ' + w);
     await page('#auth/signup', () => $$('.au-card input').length >= 3);
     const inputs = $$('.au-card input[type=text], .au-card input[type=email], .au-card input[type=password]');
     type(inputs[0], 'Design Tester'); type(inputs[1], 'design' + Date.now() + '@example.com'); type(inputs[2], 'Hb-' + Math.random().toString(36).slice(2) + '-Kq7');

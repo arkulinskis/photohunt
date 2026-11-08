@@ -131,18 +131,24 @@ def state(p):
                  find_photo_key=f["photo_key"] if f is not None else None)
         out.append(d)
     found = len([t for t in out if t["state"] == "found"])
+    bingo = None
+    if (h["kind"] or "") == "bingo":
+        lines = Game.bingo_done(len(out), [i for i, t in enumerate(out) if t["state"] == "found"])
+        bingo = {"cols": Game.bingo_cols(len(out)), "lines": lines, "count": len(lines)}
     finished = (h["status"] == "finished") or (p["finished"] is not None)
     ranking = Game.results(h, prog)
     team = [{"id": r["id"], "name": r["name"], "topper": r["topper"], "colour": r["colour"], "found": r["found"],
              "rank": r["rank"], "winner": r["winner"], "me": r["id"] == p.get_id(), "finished": r["finished"]}
             for r in ranking]
+    if h["is_demo"]:  # open example hunts: strangers' names stay few (you plus the top five)
+        team = [t for t in team if t["me"]] + [t for t in team if not t["me"]][:5]
     me = Game.player_dict(p)
     if finished and not me["stickers"]:
         me["stickers"] = Game.stickers_for(h, p, prog, len(out), ranking)
     waiting = (h["start_mode"] or "together") == "together" and h["status"] == "draft"
     ready = (h["start_mode"] or "together") == "self" and p["started"] is None and not finished
     return C.ok(player=me, hunt=dict(preview(h), intro_key=h["intro_key"], match_mode=h["match_mode"] or "magic"),
-                treasures=out, found=found, total=len(out), team=team, seconds_left=Game.seconds_left(h, p),
+                treasures=out, found=found, total=len(out), team=team, bingo=bingo, seconds_left=Game.seconds_left(h, p),
                 phase="done" if finished else ("lobby" if waiting else ("ready" if ready else "hunt")))
 
 

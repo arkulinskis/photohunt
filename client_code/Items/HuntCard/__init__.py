@@ -30,6 +30,6 @@ class HuntCard(HuntCardTemplate):
         self.status.text = label
         self.status.role = ["badge", role]
         self.code.text = "Code " + h["code"]
-        self.code.visible = not h.get("demo") or h["code"] == "CAKE42"
+        self.code.visible = not h.get("demo") or h["code"] in ph.OPEN_DEMOS
         state.set_attr(self.link, "href", router.href("hunt", h["id"]))
         state.set_attr(self.link, "aria-label", "%s, %s" % (h["title"], label))

@@ -49,6 +49,9 @@ class HuntSettings(HuntSettingsTemplate):
         self._draw()
 
     def _pick_kind(self, key, **event_args):
+        if key == "bingo" and self.kind != "bingo" and not self.h.get("id"):
+            self.time_drop.selected_value = 0          # little ones: no clock,
+            self.strict_drop.selected_value = "easy"   # forgiving matching
         self.kind = key
         self._draw()
         state.refocus(self.kinds_panel, key)

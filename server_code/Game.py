@@ -10,6 +10,8 @@ finds (a player's photo or "I did it" for one treasure, status ok / review / rej
     match_mode  "magic"     photos are compared with the grown-up's photo (Vision.py); close ones ask a grown-up
                 "judge"     a grown-up says yes or no to every photo (live board, or on the kid's tablet)
                 "honour"    every photo counts
+Photo bingo (kind "bingo", for little ones): the treasures are laid out as a bingo card (bingo_cols); a full row,
+column or diagonal is a BINGO (a celebration and the "bingo" sticker), a full card lights every candle as usual.
 Status: draft (being made; players can join and wait) -> live -> finished. Time runs out lazily: every read calls
 tick(), which finishes a hunt (or a self-start player) whose clock has run out.
 """
@@ -20,8 +22,9 @@ from anvil.tables import app_tables
 import anvil.tables as tables
 
 from . import common as C
+from . import TaskLibrary
 
-KINDS = {"photo": "Photo hunt", "voice": "Voice hunt", "task": "Task party", "mix": "Party mix"}
+KINDS = {"photo": "Photo hunt", "voice": "Voice hunt", "task": "Task party", "mix": "Party mix", "bingo": "Photo bingo"}
 FLAVOURS = ["strawberry", "chocolate", "vanilla", "mint", "blueberry", "lemon"]
 TOPPERS = ["star", "heart", "crown", "rocket", "flower", "balloon", "dino", "moon", "bolt", "fish", "cat", "rainbow"]
 COLOURS = ["pink", "mint", "blue", "lemon", "orange", "berry"]
@@ -91,12 +94,19 @@ def hunt_dict(h, counts=True):
     return d
 
 
+def lib_voice(t):
+    """The library task id whose recorded voice (theme/assets/voices/<id>.mp3) says exactly this task, else ""."""
+    lib = TaskLibrary.BY_ID.get(t["task_id"] or "")
+    return lib["id"] if lib and (t["clue"] or "").strip() == lib["text"] else ""
+
+
 def treasure_dict(t, hide_photo=False):
     hidden = hide_photo and t["kind"] != "task"
     return {"id": t.get_id(), "position": int(t["position"] or 0), "kind": t["kind"] or "find", "name": t["name"] or "",
             "clue": t["clue"] or "", "photo_key": None if hidden else t["photo_key"],
             "art": None if hidden else demo_art_url(t["demo_art"]), "has_photo": bool(t["photo_key"] or t["demo_art"]),
             "voice_key": t["voice_key"], "voice_seconds": t["voice_seconds"] or 0, "task_id": t["task_id"],
+            "lib_voice": lib_voice(t),
             "timer": int(t["timer"] or 0), "proof": t["proof"] or "photo", "has_target": bool(t["signature"])}
 
 
@@ -104,6 +114,36 @@ def player_dict(p):
     return {"id": p.get_id(), "name": p["name"] or "Player", "topper": p["topper"] or "star", "colour": p["colour"] or "pink",
             "joined": C.iso(p["joined"]), "started": C.iso(p["started"]), "finished": C.iso(p["finished"]),
             "stickers": list(p["stickers"] or []), "kid": p["kid"] is not None}
+
+
+# ---------------------------------------------------------------- photo bingo
+def bingo_cols(total):
+    """Columns of the bingo card: 2x2 for up to 4 pictures, 3 across up to 9, then 4 across."""
+    return 2 if total <= 4 else (3 if total <= 9 else 4)
+
+
+def bingo_lines(total):
+    """Every line on the card as a list of 0-based cells: full rows, columns of 2 or more, and both diagonals when the
+    card is square."""
+    if total < 2:
+        return []
+    cols = bingo_cols(total)
+    rows = (total + cols - 1) // cols
+    lines = [list(range(r * cols, r * cols + cols)) for r in range(rows) if r * cols + cols <= total]
+    for c in range(cols):
+        col = [r * cols + c for r in range(rows) if r * cols + c < total]
+        if len(col) >= 2:
+            lines.append(col)
+    if rows == cols and total == cols * cols:
+        lines.append([i * cols + i for i in range(cols)])
+        lines.append([i * cols + (cols - 1 - i) for i in range(cols)])
+    return lines
+
+
+def bingo_done(total, found_cells):
+    """The lines a player has completed (lists of 0-based cells)."""
+    got = set(found_cells)
+    return [line for line in bingo_lines(total) if all(i in got for i in line)]
 
 
 # ---------------------------------------------------------------- clocks
@@ -262,6 +302,11 @@ def stickers_for(h, p, prog, total, ranking=None):
         out.append("voice")
     if len([f for f in mine if f["treasure"]["kind"] == "task"]) >= 3:
         out.append("task")
+    if (h["kind"] or "") == "bingo" and total:
+        order = {t.get_id(): i for i, t in enumerate(treasures(h))}
+        got = list(prog["team"]) if together else [f["treasure"].get_id() for f in mine]
+        if bingo_done(total, [order[k] for k in got if k in order]):
+            out.append("bingo")
     return out
 
 

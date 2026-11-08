@@ -1,6 +1,7 @@
 /* The main journeys, run inside the real app (Anvil App Server) by tools/ui_test.py through tools/live/drive.mjs
    (Chrome with a fake camera and microphone). Resolves to {ok, log}. Keep log lines ASCII (the Windows console).
-   1. A visitor plays the Try-me Hunt (CAKE42): join, Go, snap with the camera, a candle lights.
+   1. A visitor plays the Try-me Hunt (CAKE42): join, Go, snap with the camera, a candle lights. Then photo bingo
+      (BINGO9): three snaps in a row are a BINGO.
    2. A grown-up signs up, adds a kid, bakes a hunt, snaps two treasures (camera + Choose a photo), records a clue,
       switches to a party mix and adds library tasks, checks the share QR decodes to the join link, starts the hunt.
    3. The kid joins from their Kids' corner, finds a treasure (or a grown-up says yes), does a task.
@@ -99,6 +100,28 @@
     await until(closed, 'dialog closes by itself', 8000);
     await until(() => /1 of 5/.test($('.anvil-role-play-count').textContent) && $$('.pt.is-found').length === 1, 'a candle is lit');
     ok($$('.play-cake .ph-candle.lit').length === 1, 'play: the cake has one lit candle');
+
+    // ---------------------------------------------------------------- 1b. photo bingo (BINGO9): a 3x3 card, a full row is a BINGO
+    await page('#join/BINGO9', () => byText('.anvil-role-page-title', "Little Sam's Photo Bingo"), 'the bingo hunt card');
+    type($$('.jn-form input').find(vis), 'Tiny Tom');
+    await click('.anvil-role-btn-primary button', "Let's hunt!");
+    await until(() => /^#play\//.test(location.hash) && window.UI_READY && $('.play-top') && $('.anvil-role-play-go'), 'bingo play screen', 30000);
+    await click('.anvil-role-play-go button');
+    await until(() => $$('.pt.bingo').length === 9 && !$('.ph-count'), 'the bingo card', 20000);
+    ok(getComputedStyle($('.anvil-role-play-bingo > div')).gridTemplateColumns.split(' ').length === 3, 'bingo: 9 big pictures in 3 columns');
+    ok(norm($('.anvil-role-play-headline').textContent) === 'Photo bingo!', 'bingo: the headline');
+    for (let i = 0; i < 3; i++) {
+      $$('.pt.bingo')[i].click();
+      await until(() => modal() && byText('.anvil-modal button', 'I found it! Take a picture'), 'bingo find dialog');
+      await click('.anvil-modal button', 'I found it! Take a picture');
+      await snapInModal();
+      await until(() => byText('.anvil-modal .anvil-role-fn-verdict', 'You found it!'), 'bingo found', 30000);
+      await until(closed, 'bingo dialog closes by itself', 8000);
+      await until(() => $$('.pt.bingo.is-found').length === i + 1, 'stamp ' + (i + 1));
+    }
+    ok(vis($('.pt.bingo.is-found .pt-stamp')), 'bingo: found pictures get a stamp');
+    await until(() => norm($('.anvil-role-play-headline').textContent) === 'BINGO!', 'BINGO!', 10000);
+    ok($$('.pt.bingo.in-line').length === 3, 'bingo: a full row is a BINGO (the row lights up)');
 
     // ---------------------------------------------------------------- 2. a grown-up signs up (members-only page -> sign in -> back)
     await page('#family', () => true);
@@ -293,6 +316,8 @@
     type($('.tasks-tools input'), 'jump');
     await until(() => $$('.tk').length > 0 && $$('.tk').length < 10, 'search');
     ok($$('.tk').every((t) => /jump/i.test(t.textContent)), 'tasks: search finds jumping tasks');
+    const clip = await fetch('_/theme/voices/m01.mp3');
+    ok(clip.ok && (await clip.arrayBuffer()).byteLength > 4000, 'tasks: the recorded task voices are served');
 
     await page('#profile', () => $('.pf-grid'), 'profile');
     type($('.pf-grid input'), 'Flow Tester Two');

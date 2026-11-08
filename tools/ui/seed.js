@@ -18,6 +18,24 @@
     input.dispatchEvent(new Event('blur', { bubbles: true }));
   }
   const phCall = async (n, ...a) => JSON.parse(await window.phCall(n, JSON.stringify(a)));
+  async function bingoPage(cells) {  // photo bingo (BINGO9) with a finished row: snapped with the (fake) camera
+    const qa = (s) => Array.from(document.querySelectorAll(s));
+    const shown = (e) => e && e.getBoundingClientRect().width > 0;
+    const b = (await phCall('join_hunt', 'BINGO9', 'Little Sam', 'heart', 'pink')).token;
+    await phCall('go', b);
+    window.UI_READY = false; location.hash = '#play/' + b;
+    await until(() => window.UI_READY && qa('.pt.bingo').length === 9, 'bingo card', 40000);
+    const todo = cells || [0, 1, 2];
+    for (let n = 0; n < todo.length; n++) {
+      qa('.pt.bingo')[todo[n]].click();
+      (await until(() => qa('.anvil-modal button').find((x) => shown(x) && /I found it/.test(x.textContent)), 'bingo find dialog')).click();
+      await until(() => { const v = document.querySelector('.anvil-modal .ph-cam video'); return v && v.videoWidth > 0; }, 'camera', 20000);
+      document.querySelector('.anvil-modal .anvil-role-ph-shutter button').click();
+      await until(() => !qa('.anvil-modal').some((m) => shown(m) && m.querySelector('.fn')) && qa('.pt.bingo.is-found').length === n + 1, 'bingo stamp', 30000);
+    }
+    await sleep(1800);  // the BINGO! banner has gone
+    return b;
+  }
   async function go(hash, ready) {
     if (location.hash !== hash) window.UI_READY = false;
     location.hash = hash;
@@ -70,10 +88,11 @@
     const task = st.treasures.find((t) => t.kind === 'task' && t.proof === 'done');
     if (task) await phCall('submit_find', play, task.id);
     const visitor = (await phCall('join_hunt', 'CAKE42', 'Visiting Vera', 'flower', 'berry')).token;
+    const bingo = await bingoPage([0, 1, 2, 4]);
     const hq = await phCall('get_hq');
     const demo = (hq.examples.find((h) => h.birthday_name === 'Mia') || hq.examples[0]).id;
     window.SEED = { hunt: '#hunt/' + e(hunt.id), live: '#live/' + e(hunt.id), album: '#album/' + e(demo), play: '#play/' + play,
-                    kid: '#kid/' + kids[0].token, visitor: '#play/' + visitor };
+                    kid: '#kid/' + kids[0].token, visitor: '#play/' + visitor, bingo: '#play/' + bingo };
     return window.SEED;
   } catch (err) {
     return { error: String(err && err.message || err) };
