@@ -305,6 +305,8 @@
     await click('.anvil-role-btn button', 'Tap to blow');
     await until(() => $$('.play-cake .ph-smoke').length > 0, 'candles out');
     ok(/Hooray/.test($('.anvil-role-play-subline').textContent), 'play: blowing the candles out');
+    await sleep(3600);
+    ok(/Hooray/.test($('.anvil-role-play-subline').textContent) && !vis($('.anvil-role-play-subline + * .anvil-role-btn-primary')), 'play: the Hooray stays after the 3 s refresh');
 
     await page('#album/' + encodeURIComponent(huntId), () => $('.al-results') && $$('.rr').length >= 1, 'album');
     ok($$('.rr').length === 1 && /Mimi/.test($('.rr').textContent), 'album: the results');

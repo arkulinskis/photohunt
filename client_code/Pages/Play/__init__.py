@@ -28,6 +28,7 @@ class Play(PlayTemplate):
         self._left = -1
         self._busy = False
         self._celebrated = False
+        self._blowing = False   # the kid pressed Blow out the candles (the refresh keeps that screen)
         self._tiles_sig = ""
         self._bingos = -1   # photo bingo: lines already celebrated (-1 = not drawn yet)
         self.tiles_panel.add_event_handler("x-open", self._open)
@@ -113,8 +114,10 @@ class Play(PlayTemplate):
         self.intro_voice.text = h.get("message") or ""
         self.intro_voice.visible = phase in ("lobby", "ready") and bool(h.get("intro_key") or h.get("message"))
         self.go_button.visible = phase == "ready"
-        self.blow_button.visible = self.tap_button.visible = False
-        self.level_box.visible = False
+        blowing = phase == "done" and self._blowing and not self.cake.blown
+        self.blow_button.visible = False
+        self.tap_button.visible = blowing
+        self.level_box.visible = blowing
         self.tiles_box.visible = phase == "hunt"
         self.stickers_box.visible = phase == "done"
         self.after_box.visible = phase == "done"
@@ -198,11 +201,14 @@ class Play(PlayTemplate):
             self.subline.text = "You came %s out of %d. Now blow out the candles!" % (_ordinal(rank), len(r["team"]))
         else:
             self.subline.text = "Now blow out the candles and make a wish!"
+        if self.cake.blown:  # the 3-second refresh must not ask again once they're out
+            self.subline.text = self._hooray()
+        elif self._blowing:
+            self.subline.text = "Blow on the tablet, hard!"
         self.team_title.text = "Results"
         self.stickers_panel.items = [{"id": s, "size": 72} for s in (p.get("stickers") or [])]
-        if not self.cake.blown:
+        if not self.cake.blown and not self._blowing:
             self.blow_button.visible = r["found"] > 0
-            self.tap_button.visible = False
         corners = [k for k in ph.kid_corners() if k.get("name") == p["name"]] if p.get("kid") else []
         self.corner_link.visible = bool(corners)
         if corners:
@@ -240,6 +246,7 @@ class Play(PlayTemplate):
     # ---- blowing out the candles
     @handle("blow_button", "click")
     def blow_button_click(self, **event_args):
+        self._blowing = True
         self.blow_button.visible = False
         self.tap_button.visible = True
         self.level_box.visible = True
@@ -258,11 +265,16 @@ class Play(PlayTemplate):
         window.PH.blowStop()
         self._blown()
 
+    def _hooray(self):
+        name = self.st["hunt"].get("birthday_name") or ""
+        return "Hooray! Happy birthday%s!" % ((" " + name) if name else "")
+
     def _blown(self):
+        self._blowing = False
         self.cake.blown = True
         self.tap_button.visible = self.blow_button.visible = False
         self.level_box.visible = False
-        self.subline.text = "Hooray! Happy birthday%s!" % ((" " + self.st["hunt"]["birthday_name"]) if self.st["hunt"].get("birthday_name") else "")
+        self.subline.text = self._hooray()
         ph.sfx("whoosh")
         window.setTimeout(lambda: (ph.sfx("tada"), ph.confetti()), 500)
 
