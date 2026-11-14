@@ -408,7 +408,7 @@ assert "email" in r["tables"]["users"] and "code" in r["tables"]["hunts"] and r[
 
 # ---------------------------------------------------------------------------------- every callable is covered by a permission check
 # A callable that changes data without require_user / a C.require_* check is a security hole. List the public ones here.
-PUBLIC = {"get_me", "submit_feedback", "legal_state", "legal_accept", "task_library", "hunt_preview", "join_hunt",
+PUBLIC = {"session_ping", "get_me", "submit_feedback", "legal_state", "legal_accept", "task_library", "hunt_preview", "join_hunt",
           "play_state", "go", "submit_find", "grownup_check", "kid_corner", "kid_join"}
 for name, (f, need) in sorted(anvil.server.CALLABLES.items()):
     if name in PUBLIC:
