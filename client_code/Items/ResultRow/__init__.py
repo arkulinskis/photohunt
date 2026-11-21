@@ -13,4 +13,5 @@ class ResultRow(ResultRowTemplate):
         self.topper.topper, self.topper.colour = r["topper"], r["colour"]
         self.meta.text = "%d of %d candles" % (r.get("found", 0), r.get("total", 0)) + ("  ·  Winner!" if r.get("winner") else "")
         self.classes["win"] = bool(r.get("winner"))
+        self.award.award = r.get("award")
         self.stickers_panel.items = [{"id": s, "size": 40} for s in (r.get("stickers") or [])]

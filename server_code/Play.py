@@ -138,7 +138,8 @@ def state(p):
     finished = (h["status"] == "finished") or (p["finished"] is not None)
     ranking = Game.results(h, prog)
     team = [{"id": r["id"], "name": r["name"], "topper": r["topper"], "colour": r["colour"], "found": r["found"],
-             "rank": r["rank"], "winner": r["winner"], "me": r["id"] == p.get_id(), "finished": r["finished"]}
+             "rank": r["rank"], "winner": r["winner"], "me": r["id"] == p.get_id(), "finished": r["finished"],
+             "award": r.get("award") if finished else None}
             for r in ranking]
     if h["is_demo"]:  # open example hunts: strangers' names stay few (you plus the top five)
         team = [t for t in team if t["me"]] + [t for t in team if not t["me"]][:5]

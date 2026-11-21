@@ -143,7 +143,67 @@ BY_ID: dict = {t["id"]: t for t in TASKS}
 assert len(TASKS) == 100, len(TASKS)
 
 
+# ---------------------------------------------------------------- ready-made packs ("Ready in a minute")
+# One tap makes a task hunt from a pack: 8 library tasks picked for the kids' ages, no photos to take first.
+AGES: list = [
+    {"key": "little", "label": "Ages 3-5", "settings": {"win_style": "together", "start_mode": "together", "time_limit": 0,
+                                                        "match_mode": "honour", "strictness": "easy"},
+     "note": "one cake for everyone, no clock, every photo counts"},
+    {"key": "middle", "label": "Ages 6-8", "settings": {"win_style": "race", "start_mode": "together", "time_limit": 15,
+                                                        "match_mode": "honour", "strictness": "normal"},
+     "note": "a race, 15 minutes"},
+    {"key": "big", "label": "Ages 9-12", "settings": {"win_style": "race", "start_mode": "together", "time_limit": 10,
+                                                      "match_mode": "honour", "strictness": "tricky"},
+     "note": "a race, 10 minutes, the trickier tasks"},
+]
+PACKS: list = [
+    {"key": "rainy", "title": "Rainy-day indoor mix", "icon": "balloon", "flavour": "blueberry",
+     "text": "Seek, wiggle and giggle without leaving the house.",
+     "message": "It's raining treasure! Find, wiggle and giggle your way round the house.",
+     "ids": {"little": ["f02", "m04", "f03", "s04", "f13", "p01", "m15", "f15"],
+             "middle": ["f01", "m12", "s01", "f07", "k01", "b04", "p03", "f12"],
+             "big": ["f04", "k04", "b09", "f17", "k12", "s11", "m20", "f20"]}},
+    {"key": "colours", "title": "Colour and shape hunt", "icon": "brush", "flavour": "lemon",
+     "text": "Snap something red, something round, something shiny.",
+     "message": "Rainbow detectives, go! Snap every colour and shape you can find.",
+     "ids": {"little": ["f02", "f09", "f14", "f01", "f03", "f15", "f13", "f12"],
+             "middle": ["f02", "f09", "f14", "f10", "f07", "f12", "f20", "k09"],
+             "big": ["f04", "f10", "f20", "k12", "k09", "f17", "f05", "b07"]}},
+    {"key": "wiggle", "title": "Wiggle party", "icon": "music", "flavour": "strawberry",
+     "text": "Burn off the sugar: animal walks, freeze dance, a conga line.",
+     "message": "Time to wiggle! Hop, crawl and dance to light the candles.",
+     "ids": {"little": ["m04", "m11", "m17", "m15", "s10", "m13", "s04", "p02"],
+             "middle": ["m01", "m02", "m12", "m08", "m03", "s08", "m20", "p09"],
+             "big": ["m01", "m10", "m12", "m16", "m05", "s13", "m20", "p09"]}},
+    {"key": "calm", "title": "Kind and calm", "icon": "heart", "flavour": "mint",
+     "text": "Wind down before cake: kind deeds, cards and quiet tasks.",
+     "message": "Kind hearts hunt! Every kind thing you do lights a candle.",
+     "ids": {"little": ["h01", "h06", "p07", "m18", "h07", "f03", "p01", "h04"],
+             "middle": ["h02", "h05", "h08", "h03", "m06", "k03", "s09", "h04"],
+             "big": ["h02", "h05", "h10", "h08", "k08", "b01", "h09", "h04"]}},
+    {"key": "brainy", "title": "Brainy builders", "icon": "bulb", "flavour": "chocolate",
+     "text": "Counting, building and puzzling for clever kids.",
+     "message": "Calling all clever clogs! Count, build and think to fill the cake.",
+     "ids": {"little": ["b04", "f05", "k04", "f11", "b05", "f16", "k03", "b03"],
+             "middle": ["b03", "b07", "b08", "k04", "k10", "f17", "b10", "k13"],
+             "big": ["b02", "b06", "b08", "b09", "k10", "k12", "f04", "k11"]}},
+]
+PACKS_BY_KEY: dict = {p["key"]: p for p in PACKS}
+AGES_BY_KEY: dict = {a["key"]: a for a in AGES}
+for _p in PACKS:
+    for _ids in _p["ids"].values():
+        assert len(_ids) == len(set(_ids)) == 8 and all(i in BY_ID for i in _ids), _p["key"]
+
+
+def packs_public():
+    """The packs as the browser shows them (each age's task texts, so the card can say what's inside)."""
+    return {"ages": [{"key": a["key"], "label": a["label"], "note": a["note"]} for a in AGES],
+            "packs": [{"key": p["key"], "title": p["title"], "text": p["text"], "icon": p["icon"], "flavour": p["flavour"],
+                       "tasks": {age: [BY_ID[i]["text"] for i in ids] for age, ids in p["ids"].items()}} for p in PACKS]}
+
+
 @anvil.server.callable
 def task_library():
-    """The whole library (public: the Tasks page is open to visitors too)."""
-    return {"categories": [{"key": k, "label": label, "count": len(_RAW[k])} for k, label in CATEGORIES], "tasks": TASKS}
+    """The whole library (public: the Tasks page is open to visitors too), plus the ready-made packs."""
+    return {"categories": [{"key": k, "label": label, "count": len(_RAW[k])} for k, label in CATEGORIES], "tasks": TASKS,
+            "packs": packs_public()}

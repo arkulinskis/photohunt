@@ -39,6 +39,8 @@ class Album(AlbumTemplate):
         self.wipe_button.visible = mine and r["photos"] > 0
         self.make_button.visible = not mine
         state.set_attr(self.back_link, "href", router.href("hunt", h["id"]))
+        state.set_attr(self.show_link, "href", router.href("show", h["id"]))
+        self.show_link.visible = bool(r["players"])
 
     @handle("print_button", "click")
     def print_button_click(self, **event_args):

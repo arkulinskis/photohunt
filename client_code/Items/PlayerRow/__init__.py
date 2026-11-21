@@ -28,6 +28,7 @@ class PlayerRow(PlayerRowTemplate):
         if p.get("seconds_left") is not None and not p.get("finished"):
             bits.append(ph.clock(p["seconds_left"]) + " left")
         self.meta.text = " · ".join(bits)
+        self.award.award = p.get("award") if over else None
         self.remove_button.visible = bool(p.get("_mine"))
         state.set_control_attr(self.remove_button, "aria-label", "Remove " + p["name"])
 

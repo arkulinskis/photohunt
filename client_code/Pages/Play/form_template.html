@@ -37,6 +37,10 @@
           <anvil-component type="RepeatingPanel" name="tiles_panel" prop:item_template="PhotoHunt.Items.PlayTile" prop:role='["play-grid"]'></anvil-component>
         </section>
 
+        <section anvil:name="award_box" class="play-award">
+          <anvil-component type="PhotoHunt.Components.Award" name="award" prop:size="lg"></anvil-component>
+        </section>
+
         <section anvil:name="stickers_box" class="play-stickers">
           <h2>Your stickers</h2>
           <anvil-component type="RepeatingPanel" name="stickers_panel" prop:item_template="PhotoHunt.Items.StickerItem" prop:role='["sticker-row"]'></anvil-component>

@@ -1,0 +1,14 @@
+<article class="pkc">
+  <div class="pkc-head">
+    <span class="pkc-icon" anvil:dom-node="tile" aria-hidden="true"><i class="ic ic-star" anvil:dom-node="icon"></i></span>
+    <div class="pkc-body">
+      <anvil-component type="Label" name="title" prop:role='["pkc-title"]' bind:text="self.item['title']"></anvil-component>
+      <anvil-component type="Label" name="text" prop:role='["fine-print"]' bind:text="self.item['text']"></anvil-component>
+    </div>
+  </div>
+  <details class="pkc-more">
+    <summary anvil:dom-node="summary">What's inside</summary>
+    <anvil-component type="Label" name="inside" prop:role='["pkc-inside"]'></anvil-component>
+  </details>
+  <anvil-component type="Button" name="make_button" prop:text="Make this hunt" prop:role='["btn", "btn-primary", "btn-block", "ic-wand"]'></anvil-component>
+</article>

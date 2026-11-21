@@ -4,6 +4,7 @@
   <div class="rr-body">
     <anvil-component type="Label" name="name" prop:role='["rr-name"]' bind:text="self.item['name']"></anvil-component>
     <anvil-component type="Label" name="meta" prop:role='["fine-print"]'></anvil-component>
+    <anvil-component type="PhotoHunt.Components.Award" name="award" prop:size="sm"></anvil-component>
   </div>
   <anvil-component type="RepeatingPanel" name="stickers_panel" prop:item_template="PhotoHunt.Items.StickerItem" prop:role='["rr-stickers"]'></anvil-component>
 </div>

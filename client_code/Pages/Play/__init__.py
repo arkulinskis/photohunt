@@ -120,6 +120,7 @@ class Play(PlayTemplate):
         self.level_box.visible = blowing
         self.tiles_box.visible = phase == "hunt"
         self.stickers_box.visible = phase == "done"
+        self.award_box.visible = phase == "done" and any(t.get("me") and t.get("award") for t in r["team"])
         self.after_box.visible = phase == "done"
         team = [dict(t, _show_rank=(phase == "done" and not together), _total=r["total"] if not together else 0,
                      _show_found=phase != "lobby") for t in r["team"]]
@@ -206,6 +207,7 @@ class Play(PlayTemplate):
         elif self._blowing:
             self.subline.text = "Blow on the tablet, hard!"
         self.team_title.text = "Results"
+        self.award.award = me.get("award")
         self.stickers_panel.items = [{"id": s, "size": 72} for s in (p.get("stickers") or [])]
         if not self.cake.blown and not self._blowing:
             self.blow_button.visible = r["found"] > 0

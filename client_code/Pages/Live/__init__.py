@@ -94,12 +94,14 @@ class Live(LiveTemplate):
         elif not together_clock and not done:
             self.hint.text = "Each kid's clock starts when they press Go on their tablet."
         elif done:
-            self.hint.text = "Open the party album for everyone's photos and printable certificates."
+            self.hint.text = "Everyone gets an award! Put the Party show on the TV, or open the album for photos and certificates."
         else:
             self.hint.text = ""
         self.hint.visible = bool(self.hint.text)
         state.set_attr(self.back_link, "href", router.href("hunt", h["id"]))
         state.set_attr(self.album_link, "href", router.href("album", h["id"]))
+        state.set_attr(self.show_link, "href", router.href("show", h["id"]))
+        self.show_link.visible = done and bool(ps)
         together = h["win_style"] == "together"
         self.team_box.visible = together
         if together:

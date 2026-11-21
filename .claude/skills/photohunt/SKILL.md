@@ -152,6 +152,16 @@ tools/                     check.py, assets.py, build_icons.py, make_icons.py, u
   `"C:\Program Files\Python311\python.exe" tools/make_task_voices.py --check` (records missing ones; pass ids to redo),
   then `python tools/assets.py`. test_server.py fails if a task has no clip. Game.lib_voice() sends the id only while the
   treasure's text still matches the library text; VoiceButton.lib_id plays it (PH.playOrSay falls back to the device voice).
+- **Ready-made packs** ("Ready in a minute", 2026-11-20): `TaskLibrary.PACKS` (5 packs x 3 age bands x 8 existing
+  task ids, asserted at import) and `AGES` (the settings per band); `Hunts.create_pack_hunt(pack, ages)`; the browser gets
+  them inside `task_library()["packs"]`. UI = `Components/Packs` (age chips = Items/CatChip, cards = Items/PackCard) on
+  Home and Tasks; after making one it goes to `#hunt/<id>/share`, which opens the Share dialog and drops `/share`.
+- **Awards** (2026-11-20): `Game.give_awards` runs at the end of `Game.results()`, so every result row (live board,
+  album, Play team list when finished) carries `award` {key, title, why, icon}. Earned awards (`AWARDS`) go in order
+  to the best-scoring player without one; the rest get `SPIRIT` awards rotated by the hunt code. `Components/Award`
+  draws it (size sm / lg / xl). No table: awards follow the results.
+- **Party show** (`Pages/Show`, `#show/<id>`, 2026-11-20): built from `album()` (owner or example only); in
+  `router.BARE_PAGES` (no header/footer/tab bar). Timer = window.setInterval guarded by `_shown`; keys on document.
 - **Open example hunts**: CAKE42 and BINGO9 (ph.OPEN_DEMOS); DemoData.ensure_loaded reloads demo data that predates BINGO9.
 
 ## Gotchas

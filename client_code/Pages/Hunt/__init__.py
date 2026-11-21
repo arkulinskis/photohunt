@@ -21,6 +21,7 @@ class Hunt(HuntTemplate):
     def __init__(self, args=(), **properties):
         super().__init__(**properties)
         self.hid = args[0] if args else ""
+        self.open_share = len(args) > 1 and args[1] == "share"   # a hunt just made from a ready-made pack
         self.h: dict = {}
         self.mine = False
         state.heading(self.title, 1)
@@ -28,6 +29,13 @@ class Hunt(HuntTemplate):
         self.treasures_panel.add_event_handler("x-move", self._move)
         self.treasures_panel.add_event_handler("x-delete", self._delete)
         self._load()
+
+    @handle("", "show")
+    def form_show(self, **event_args):
+        if self.open_share and self.mine:
+            self.open_share = False
+            router.replace("hunt", self.hid)
+            self.share_button_click()
 
     def _load(self):
         r: dict = {"ok": False}

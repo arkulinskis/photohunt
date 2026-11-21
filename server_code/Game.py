@@ -273,7 +273,124 @@ def results(h, prog=None):
         d["rank"] = 1 if together else rank
         d["winner"] = (len(prog["team"]) >= total > 0) if together else (rank == 1 and d["found"] > 0)
         out.append(d)
+    give_awards(h, prog, out, total)
     return out
+
+
+# ---------------------------------------------------------------- awards: one of its own for every kid
+# Earned awards, in the order they are handed out. Each scores a player from their stats (None = not earned);
+# the best-scoring player who has no award yet gets it. Everyone left over gets a "spirit" award, so every kid
+# goes home with a title that is theirs alone (no two kids share one while titles last).
+AWARDS = [
+    ("champ", "Hunt Champion", "Lit the most candles", "trophy"),
+    ("speedy", "Speed Snapper", "Filled the whole cake fastest", "timer"),
+    ("first", "First Find", "Found the very first treasure", "flag"),
+    ("eagle", "Eagle Eye", "Snapped the closest matches", "eye"),
+    ("task", "Task Champion", "Did the most party tasks", "star"),
+    ("kind", "Kind Heart", "Did a kind task for someone", "heart"),
+    ("team", "Team Player", "Found the most for the team cake", "users"),
+    ("snapper", "Super Snapper", "Took the most photos", "camera"),
+    ("never", "Never Gave Up", "Kept hunting to the very last find", "sparkle"),
+    ("seeker", "Super Seeker", "Found half the treasures or more", "search"),
+]
+SPIRIT = [
+    ("party", "Party Star", "Brought the party spirit", "balloon"),
+    ("explorer", "Brave Explorer", "Went looking in every corner", "map"),
+    ("smile", "Sunshine Smile", "Hunted with a big smile", "smile"),
+    ("curious", "Curious Cat", "Peeked behind everything", "search"),
+    ("spark", "Bright Spark", "Had the cleverest ideas", "bulb"),
+    ("giggle", "Giggle Champion", "Made the hunt more fun", "smile"),
+    ("tracker", "Treasure Tracker", "Followed every clue", "pin"),
+    ("guardian", "Cake Guardian", "Kept the birthday cake safe", "cake"),
+    ("wonder", "Wonder Wanderer", "Explored the whole party", "globe"),
+    ("dreamer", "Big Dreamer", "Made the best birthday wish", "wand"),
+    ("buddy", "Best Buddy", "Cheered everyone on", "heart"),
+    ("music", "Party Rocker", "Danced through the hunt", "music"),
+]
+
+
+def _stats(h, prog, rows, total):
+    """Per player id: the numbers the awards look at."""
+    oks = prog["ok"]
+    first_pid = oks[0]["player"].get_id() if oks else None
+    last_pid = oks[-1]["player"].get_id() if len(oks) > 1 else None
+    team_by: dict = {}
+    for pr, _f in prog["team"].values():
+        team_by[pr.get_id()] = team_by.get(pr.get_id(), 0) + 1
+    out = {}
+    pmap = {p.get_id(): p for p in players(h)}
+    kind_prefix = TaskLibrary.PREFIX["kind"]
+    for r in rows:
+        pid = r["id"]
+        mine = [f for f in oks if f["player"] is not None and f["player"].get_id() == pid]
+        tasks = [f for f in mine if f["treasure"] is not None and f["treasure"]["kind"] == "task"]
+        scored = [f["score"] for f in mine if f["score"]]
+        p = pmap.get(pid)
+        took = None
+        if p is not None and total and len(mine) >= total and p["started"] is not None and p["finished"] is not None:
+            took = (p["finished"] - p["started"]).total_seconds()
+        out[pid] = {"found": len(mine), "tasks": len(tasks),
+                    "kind": len([f for f in tasks if (f["treasure"]["task_id"] or "").startswith(kind_prefix)]),
+                    "photos": len([f for f in mine if f["photo_key"] or f["demo_art"]]),
+                    "eagle": (sum(scored) / len(scored)) if len(scored) >= 2 else None, "took": took,
+                    "first": pid == first_pid, "last": pid == last_pid, "team": team_by.get(pid, 0),
+                    "rank": r.get("rank") or 0}
+    return out
+
+
+def _award_score(key, s, together, total):
+    """How strongly a player earned this award (bigger = better), or None."""
+    if key == "champ":
+        return (s["found"] * 1.0) if (not together and s["rank"] == 1 and s["found"] > 0) else None
+    if key == "speedy":
+        return (-s["took"]) if (not together and s["took"] is not None) else None
+    if key == "first":
+        return 1.0 if s["first"] else None
+    if key == "eagle":
+        return s["eagle"] if (s["eagle"] is not None and s["eagle"] >= 0.6) else None
+    if key == "task":
+        return (s["tasks"] * 1.0) if s["tasks"] >= 2 else None
+    if key == "kind":
+        return (s["kind"] * 1.0) if s["kind"] >= 1 else None
+    if key == "team":
+        return (s["team"] * 1.0) if (together and s["team"] >= 1) else None
+    if key == "snapper":
+        return (s["photos"] * 1.0) if s["photos"] >= 2 else None
+    if key == "never":
+        return 1.0 if s["last"] else None
+    if key == "seeker":
+        return (s["found"] * 1.0) if (total and s["found"] * 2 >= total) else None
+    return None
+
+
+def give_awards(h, prog, rows, total):
+    """Adds row["award"] = {key, title, why, icon} to every result row (rows come ranked best first)."""
+    if not rows:
+        return
+    together = (h["win_style"] or "race") == "together"
+    stats = _stats(h, prog, rows, total)
+    given: dict = {}
+    for key, title, why, icon in AWARDS:
+        best, best_score = None, None
+        for r in rows:  # best first, so a tie goes to the higher-ranked player
+            if r["id"] in given:
+                continue
+            sc = _award_score(key, stats[r["id"]], together, total)
+            if sc is not None and (best_score is None or sc > best_score):
+                best, best_score = r, sc
+        if best is not None:
+            given[best["id"]] = {"key": key, "title": title, "why": why, "icon": icon}
+    # Spirit awards for everyone else, in an order that changes from hunt to hunt (and stays put within one hunt).
+    seed = sum(ord(ch) for ch in (h["code"] or ""))
+    spirit = SPIRIT[seed % len(SPIRIT):] + SPIRIT[:seed % len(SPIRIT)]
+    i = 0
+    for r in rows:
+        if r["id"] not in given:
+            key, title, why, icon = spirit[i % len(spirit)]
+            given[r["id"]] = {"key": key, "title": title, "why": why, "icon": icon}
+            i += 1
+    for r in rows:
+        r["award"] = given[r["id"]]
 
 
 def stickers_for(h, p, prog, total, ranking=None):

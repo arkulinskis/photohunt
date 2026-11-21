@@ -12,4 +12,5 @@ class Certificate(CertificateTemplate):
         self.topper.topper, self.topper.colour = r["topper"], r["colour"]
         self.what.text = "lit %d of %d candles%s" % (r.get("found", 0), r.get("total", 0), " and won the hunt!" if r.get("winner") else "!")
         self.hunt.text = "%s · %s" % (r.get("_hunt", ""), r.get("_date", ""))
+        self.award.award = r.get("award")
         self.stickers_panel.items = [{"id": s, "size": 44} for s in (r.get("stickers") or [])]

@@ -1,0 +1,38 @@
+<anvil-form layout="PhotoHunt.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="show" anvil:name="root">
+      <div anvil:name="gone" class="ui-empty show-gone"><i class="ic ic-image"></i><h1>This party show isn't here</h1><p>The hunt may have been deleted, or it isn't yours.</p><a class="ui-btn primary" href="#home">Back to Party HQ</a></div>
+      <div anvil:name="main" class="show-main">
+        <div class="show-stage" anvil:dom-node="stage" aria-live="polite">
+          <div class="show-slide" anvil:name="slide">
+            <div class="show-cake" anvil:name="cake_box"><anvil-component type="PhotoHunt.Components.Cake" name="cake"></anvil-component></div>
+            <div class="show-pics" anvil:name="pics_box">
+              <figure class="show-orig" anvil:name="orig_box">
+                <anvil-component type="PhotoHunt.Components.Photo" name="orig"></anvil-component>
+                <figcaption>The grown-up's photo</figcaption>
+              </figure>
+              <anvil-component type="RepeatingPanel" name="snaps_panel" prop:item_template="PhotoHunt.Items.AlbumPhoto" prop:role='["show-snaps"]'></anvil-component>
+            </div>
+            <div class="show-star" anvil:name="star_box">
+              <anvil-component type="PhotoHunt.Components.Topper" name="topper" prop:size="132"></anvil-component>
+            </div>
+            <anvil-component type="Label" name="headline" prop:role='["show-title"]'></anvil-component>
+            <anvil-component type="PhotoHunt.Components.Award" name="award" prop:size="xl"></anvil-component>
+            <anvil-component type="Label" name="subline" prop:role='["show-sub"]'></anvil-component>
+          </div>
+        </div>
+        <div class="show-progress" aria-hidden="true"><span anvil:dom-node="bar"></span></div>
+        <nav class="show-bar" aria-label="Party show controls">
+          <a class="ui-btn sm show-exit" anvil:name="back_link" href="#home"><i class="ic ic-back"></i>Album</a>
+          <span class="show-spacer"></span>
+          <anvil-component type="Button" name="prev_button" prop:text="Back" prop:role='["btn", "btn-icon", "ic-back"]'></anvil-component>
+          <anvil-component type="Button" name="play_button" prop:text="Pause" prop:role='["btn", "btn-primary", "ic-pause"]'></anvil-component>
+          <anvil-component type="Button" name="next_button" prop:text="Next" prop:role='["btn", "btn-icon", "ic-arrow"]'></anvil-component>
+          <anvil-component type="Label" name="counter" prop:role='["show-count"]'></anvil-component>
+          <span class="show-spacer"></span>
+          <anvil-component type="Button" name="full_button" prop:text="Full screen" prop:role='["btn", "btn-sm", "ic-eye", "show-full"]'></anvil-component>
+        </nav>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

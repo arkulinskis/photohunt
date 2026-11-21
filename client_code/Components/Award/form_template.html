@@ -1,0 +1,19 @@
+---
+custom_component: true
+properties:
+  - name: award
+    type: object
+    default_value: null
+    description: "The award dict from the server: {key, title, why, icon} (None hides it)"
+    default_binding_prop: true
+  - name: size
+    type: string
+    default_value: sm
+    description: sm (a ribbon in a list), lg (the kid's end screen, certificates) or xl (the party show)
+toolbox_item:
+  title: Award
+  group: PhotoHunt
+help_text: |
+  A kid's award from the end of a hunt (Game.give_awards): a medal with an icon, the title and why they won it.
+---
+<div class="cmp-host"><div class="aw" anvil:dom-node="box"><span class="aw-medal" aria-hidden="true"><i class="ic ic-star" anvil:dom-node="icon"></i></span><span class="aw-text"><span class="aw-title" anvil:dom-node="title"></span><span class="aw-why" anvil:dom-node="why"></span></span></div></div>

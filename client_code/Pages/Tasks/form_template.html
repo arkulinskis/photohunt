@@ -7,6 +7,8 @@
           <p class="page-sub-p">Indoor-safe, giggly and quick. Every task has a friendly recorded voice: press Hear it. Drop any of them into a hunt, or record them in your own voice if you like.</p>
         </div>
       </div>
+      <div class="tasks-packs"><anvil-component type="PhotoHunt.Components.Packs" name="packs" prop:heading="Ready-made packs: a hunt in one tap"></anvil-component></div>
+      <h2 class="tasks-all">All 100 tasks</h2>
       <div class="tasks-tools">
         <label class="ui-field"><span class="ui-sr">Search tasks</span><anvil-component type="TextBox" name="search_box" prop:placeholder="Search: jump, draw, find..." prop:type="search"></anvil-component></label>
         <div role="group" aria-label="Categories"><anvil-component type="RepeatingPanel" name="cats_panel" prop:item_template="PhotoHunt.Items.CatChip" prop:role='["chip-row"]'></anvil-component></div>

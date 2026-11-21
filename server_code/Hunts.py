@@ -96,6 +96,31 @@ def create_hunt(settings):
 
 
 @anvil.server.callable(require_user=True)
+def create_pack_hunt(pack, ages):
+    """"Ready in a minute": a task hunt made from a ready-made pack (TaskLibrary.PACKS) for an age band, ready to share."""
+    me = C.require_user()
+    pk = TaskLibrary.PACKS_BY_KEY.get(pack if isinstance(pack, str) else "")
+    age = TaskLibrary.AGES_BY_KEY.get(ages if isinstance(ages, str) else "")
+    if pk is None or age is None:
+        return C.fail("Pick a pack and the kids' ages.")
+    if C.rate_limited("create_hunt", 30, 3600):
+        return C.fail("That's a lot of new hunts in one hour. Try again a little later.")
+    if len([h for h in app_tables.hunts.search(owner=me) if not h["is_demo"]]) >= 60:
+        return C.fail("You have 60 hunts. Delete an old one to make room.")
+    s, err = _settings(dict(age["settings"], title="%s (%s)" % (pk["title"], age["label"].lower()), kind="task",
+                            flavour=pk["flavour"], message=pk["message"]))
+    if err or not s:
+        return C.fail(err or "That didn't work.")
+    h = app_tables.hunts.add_row(owner=me, code=Game.new_code(), status="draft", created=C.now(), updated=C.now(),
+                                 is_demo=False, **s)
+    for i, tid in enumerate(pk["ids"][age["key"]]):
+        task = TaskLibrary.BY_ID[tid]
+        app_tables.treasures.add_row(hunt=h, position=i + 1, kind="task", name=task["text"][:60], clue=task["text"],
+                                     task_id=tid, timer=task["timer"], proof=task["proof"], created=C.now(), is_demo=False)
+    return C.ok(hunt=Game.hunt_dict(h))
+
+
+@anvil.server.callable(require_user=True)
 def update_hunt(hunt_id, settings):
     me = C.require_user()
     h = _hunt(hunt_id, me)

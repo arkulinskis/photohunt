@@ -4,6 +4,7 @@
     <h2 class="cert-title">Super Hunter certificate</h2>
     <anvil-component type="Label" name="name" prop:role='["cert-name"]' bind:text="self.item['name']"></anvil-component>
     <anvil-component type="Label" name="what" prop:role='["cert-what"]'></anvil-component>
+    <anvil-component type="PhotoHunt.Components.Award" name="award" prop:size="lg"></anvil-component>
     <anvil-component type="RepeatingPanel" name="stickers_panel" prop:item_template="PhotoHunt.Items.StickerItem" prop:role='["rr-stickers"]'></anvil-component>
     <anvil-component type="Label" name="hunt" prop:role='["cert-hunt"]'></anvil-component>
   </div>

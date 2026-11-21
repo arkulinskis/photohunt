@@ -4,7 +4,8 @@ Links in templates are plain <a href="#home">; code calls router.go("hunt", id).
 
     PAGES[name] = (who may open it, browser-tab title)   who: None = anyone, "guest" = signed out only, "user", "admin"
     NAV = the main menu (header + phone tab bar, signed-in people): (page, label, icon). At most 4.
-    KID_PAGES = pages kids use on a tablet: no header, footer or tab bar (Shell adds "no-chrome").
+    KID_PAGES = pages kids use on a tablet; BARE_PAGES = those + the party show: no header, footer or tab bar
+    (Shell adds "no-chrome").
 New page: add it to PAGES, to _form() and (if it belongs in the menu) to NAV.
 """
 import anvil
@@ -20,6 +21,7 @@ PAGES = {
     "hunt": ("user", "Hunt kitchen"),
     "live": ("user", "Live board"),
     "album": ("user", "Party album"),
+    "show": ("user", "Party show"),
     "family": ("user", "Kids"),
     "tasks": (None, "100 party tasks"),
     "join": (None, "Join a hunt"),
@@ -30,6 +32,7 @@ PAGES = {
 }
 NAV = [("home", "Hunts", "cake"), ("family", "Kids", "users"), ("tasks", "Tasks", "list")]
 KID_PAGES = ("play", "kid")
+BARE_PAGES = KID_PAGES + ("show",)   # no header, footer or tab bar: the kids' screens and the party show
 APP_NAME = "PhotoHunt"
 _r: dict = {"after": "", "listening": False}
 
@@ -54,6 +57,9 @@ def _form(name):
     if name == "album":
         from .Pages.Album import Album
         return Album
+    if name == "show":
+        from .Pages.Show import Show
+        return Show
     if name == "family":
         from .Pages.Family import Family
         return Family

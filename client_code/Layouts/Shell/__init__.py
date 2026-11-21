@@ -32,7 +32,7 @@ class Shell(ShellTemplate):
         if old:
             self.classes[old] = False
         self._page_class = "page-" + (page or "none")
-        self.classes.update({"signed-in": bool(me), "signed-out": not me, "no-chrome": page in router.KID_PAGES,
+        self.classes.update({"signed-in": bool(me), "signed-out": not me, "no-chrome": page in router.BARE_PAGES,
                              self._page_class: True})
         self.member_actions.visible = bool(me)
         self.guest_actions.visible = not me and page != "auth"

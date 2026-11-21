@@ -1,0 +1,28 @@
+---
+custom_component: true
+properties:
+  - name: heading
+    type: string
+    default_value: Ready in a minute
+    description: The section heading
+toolbox_item:
+  title: Ready-made packs
+  group: PhotoHunt
+help_text: |
+  "Ready in a minute": pick the kids' ages, tap a pack, and a task hunt with 8 library tasks is made and ready to share.
+  Visitors see the packs with "Sign up to use it". Packs live in server_code/TaskLibrary.py (PACKS, AGES).
+---
+<div class="cmp-host">
+  <section class="pk" aria-labelledby="pk-heading">
+    <div class="pk-head">
+      <h2 id="pk-heading" anvil:dom-node="heading">Ready in a minute</h2>
+      <p class="muted">No photos to take first: 8 indoor-safe tasks picked for their age, each read out by a friendly voice. Tap one, show the kids the QR code, done.</p>
+    </div>
+    <div class="pk-ages" role="group" aria-label="The kids' ages">
+      <anvil-component type="RepeatingPanel" name="ages_panel" prop:item_template="PhotoHunt.Items.CatChip" prop:role='["chip-row"]'></anvil-component>
+    </div>
+    <anvil-component type="Label" name="age_note" prop:role='["fine-print", "pk-note"]'></anvil-component>
+    <anvil-component type="RepeatingPanel" name="packs_panel" prop:item_template="PhotoHunt.Items.PackCard" prop:role='["pack-grid"]'></anvil-component>
+    <anvil-component type="Label" name="error" prop:role='["msg-error"]' prop:visible="false"></anvil-component>
+  </section>
+</div>
